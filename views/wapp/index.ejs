@@ -1,0 +1,54 @@
+<body>
+	</br>
+	</br>
+	<div id="contenido">
+		<div id="ui-field-contain">
+			<!--		<label for="search-1">Busqueda:</label> -->
+			<input onKeyUp="buscaFichas()"  name="busqueda-fichas" id="busqueda-fichas" value="" type="search">
+		</div>	
+	</div>
+	<div id="lista-fichas">
+		<ul data-role="listview" id="ul-fichas" data-split-theme="a"  data-split-icon="calendar"  data-inset="true">
+		</ul>
+	</div>
+	<div data-role="popup" id="cita" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+		<h3>Dar cita</h3>
+		<!--	<a href="index.html" onClick="prueba();"  data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Buy: $10.99</a>
+		<a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">Cancel</a> -->
+	<!--	<fieldset class="ui-grid-b"> -->
+			<!-- <div class="ui-block-a"> -->
+                                <fieldset class="ui-grid-a">
+                                        <div class="ui-block-a">
+                                                <div style="width:100%" id="ui-field-contain">
+                                                        <label for="fecha-servicio">Fecha:</label>
+						       <input id="fecha-servicio"  name="fecha-servicio"  type="date"> 
+						       <!--  <input name="fecha-servicio" data-role="date" type="text"> -->
+                                                </div>
+                                        </div>
+                                        <div class="ui-block-b">
+                                                <div style="width:100%" id="ui-field-contain">
+                                                        <label for="input-hora">Hora:</label>
+                                                        <input name="input-hora" id="input-hora" type="time">
+                                                </div>
+                                        </div>
+                                </fieldset>
+				<!-- </div>-->
+			<fieldset class="ui-grid-a">	
+				<div class="ui-block-a">
+                        		<div style="width:90%" id="ui-field-contain">
+                                		<label for="textarea-servicio">Servicio:</label>
+                                		<textarea rows="9" name="textarea-servicio" id="textarea-servicio"></textarea>
+                        		</div>
+                		</div>
+                		<div class="ui-block-b">
+                        		<div style="width:50%" id="ui-field-contain">
+                                		<label for="textinput-precio">Precio:</label>
+                                		<input data-clear-btn="true"  name="textinput-precio" id="textinput-precio" placeholder="" value="" type="text">
+                        		</div>
+                		</div>
+        		</fieldset>
+		<a href="index.html" onClick="saveServicio();"  data-rel="back" class="ui-shadow ui-btn ui-corner-all  ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Guardar</a>
+		<a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left  ui-btn-inline ui-mini">Cancelar</a> 
+	
+	</div>
+</body>
