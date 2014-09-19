@@ -1,7 +1,26 @@
 /**
- * Carlos Villanueva carvilsi@gmail.com
- * GNU
- */
+The MIT License
+
+Copyright (c) 2014 Carlos Villanueva
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
 
 
 /**
@@ -37,7 +56,6 @@ var and = '&';
  */
 
 function save() {
-        console.log('intentando guardar en bbdd');
 	var rest;
 	if (localStorage.id) {
 		 rest = update + localStorage.id + '?';
@@ -54,15 +72,11 @@ function save() {
             		edad + $('#textinput-edad').val() + and +
             		caracter + $('#textinput-car').val() + and +
             		problemasMedicos + $('#textarea-prob').val();
-    console.log(rest);
-        var socket = io.connect();
-        socket.request(rest,{},function(response) {
-            jQuery(document).ready(function() {
-                jQuery.each(response, function(key, player) {
-                    console.log(player);
-                });
-            });
-        });
+	$.post(rest, function (resp){
+		console.log('guardado OK');
+	}).fail(function (){
+		console.log('guardado NOK');
+	});
 }
 
 /**
@@ -72,20 +86,21 @@ function save() {
 
 
 function saveServicio() {
-	console.log('A la cosa de intentar guardar los servicio en la bbdd');
-	
-
 	var rest = createServicio +
 		fechaServicio + $('#fecha-servicio').val() + and +
 		horaServicio + $('#input-hora').val() + and +
 		conceptoServicio + $('#textarea-servicio').val() + and +
 		precioServicio + $('#textinput-precio').val();
 
-	console.log(rest);
 	$.post(rest, function (response) {
-		$.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
+			$.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
+		}).fail(function() {
+			console.log('error com.');
 		});
-	});
+	}).fail(function() {
+			console.log('error com.');
+		});
+
 }
 
 /**
@@ -94,15 +109,16 @@ function saveServicio() {
 
 function buscaFichas() {
 	var busca = $('#busqueda-fichas').val();
-	console.log(busca);
 	$.get('/ficha?where={"nombre":{"contains":"' + busca +'"}}',function (data) {
-		console.log(data);	
 		$('#ul-fichas').empty();
 		data.forEach(function(ficha){	    
 			$('#ul-fichas').append('<li id=' + ficha.id  +'><a href="/fichas"><h2>Nombre: ' + ficha.nombre + '</h2><p>Propietario: ' + ficha.propietario  + '</p><p>email: ' + ficha.email + '</p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
 		$('#ul-fichas').listview('refresh');
 		});
-	});
+	}).fail(function() {
+			console.log('error com.');
+		});
+
 }
 
 /**
@@ -126,17 +142,20 @@ function cargaFichas() {
 	if (localStorage.id) {
 		var url = document.location.href;
 		$.get('/ficha?id=' + localStorage.id, function (datos) {
-				console.log(datos);
-				$('#textinput-prop').val(datos.propietario);
-            			$('#textinput-tel').val(datos.telefono);
-            			$('#textinput-mov').val(datos.movil);
-            			$('#textinput-mail').val(datos.email);
-            			$('#textinput-nom').val(datos.nombre);
-            			$('#textinput-raza').val(datos.raza);
-            			$('#textinput-color').val(datos.color);
-            			$('#textinput-edad').val(datos.edad);
-            			$('#textinput-car').val(datos.caracter);
-            			$('#textarea-prob').val(datos.problemasMedicos);
+				setTimeout(function(){	
+					$('#textinput-prop').val(datos.propietario);
+					$('#textinput-tel').val(datos.telefono);
+					$('#textinput-mov').val(datos.movil);
+					$('#textinput-mail').val(datos.email);
+					$('#textinput-nom').val(datos.nombre);
+					$('#textinput-raza').val(datos.raza);
+					$('#textinput-color').val(datos.color);
+					$('#textinput-edad').val(datos.edad);
+					$('#textinput-car').val(datos.caracter);
+					$('#textarea-prob').val(datos.problemasMedicos);
+				},100);
+			}).fail(function() {
+				console.log('error com.');
 			});
 		}
 	 else {
@@ -144,12 +163,4 @@ function cargaFichas() {
 	}
 }
 
-/**
- * $(window).load(function(){ 
-	console.log('La jodida ostias');
-        console.log(document.location.href);
-	var url = document.location.href;
-	if (url.indexOf("fichas") != -1) {
-		console.log('si que estoy en fichas');
-	} 
-}) */
+
