@@ -33,12 +33,10 @@ module.exports.routes = {
   ***************************************************************************/
 
   'get /': {
-    //view: 'homepage'
     view: 'wapp'
-    //controller: 'WappController'
   },
   'get /fichas': {
-	  view: 'fichas/'
+	  view: 'fichas/'    
   },
   'get /servicios': {
 	  view: 'servicios/'

@@ -1,7 +1,7 @@
 <div data-role="page">
 	<div data-role="header">
 	    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-	        <a href="/" class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
+	        <a href="/" onclick=resetCam(); class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
 	    </div>
 	     	<img src="/images/logo.png" class="ui-btn-left" style="height: 2.8em" /> 
 			<h6>Fichas</h6> 
@@ -80,26 +80,40 @@
 		    		<textarea rows="9" name="textarea-prob" id="textarea-prob"></textarea>
 			</div>	
 		</div>
-	     </fieldset>
+		</fieldset>
+		<fieldset class="ui-grid-b">
+			<div class="ui-block-a">
+				<div style="width:90%" class="ui-field-contain">
+					<label for="retrato">Fotografía:</label>
+					<div id="retrato" style="margin-left:120px;margin-top=5px"></div>
+				</div>
+			</div>
+			<div class="ui-block-b">
+				<div style="width:50%" class="ui-field-contain">
+					<a href="#" onclick=foto(); id="foto" class="ui-btn ui-btn-inline ui-icon-camera ui-btn-icon-left">Foto</a>
+					<a href="#" onclick=hacerFoto(); style="display:none" style="margin-top:5px" id="hacerFoto" class="ui-btn ui-btn-inline ui-icon-camera ui-btn-icon-left">Foto</a>
+				</div>	
+			</div>
+			<div class="ui-block-c">
+				
+				<div style="width:90%" class="ui-field-contain">
+					<div id="camara" ></div>
+				</div>
+
+			</div> 
+	</fieldset>
 	</div>
 	<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 	    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
-	        <a href="/" class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
+	        <a href="/" onclick=resetCam(); class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
 	    </div>
 	    <h6>Kennel Class</h6>
     	    <div  data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
 		    <a href="/" onclick=save(); class="ui-btn ui-btn-icon-left ui-icon-check">Guardar</a> 
-		    <a href="/" class="ui-btn ui-btn-icon-left ui-icon-delete">Cancelar</a> 
+		    <a href="/" onclick=resetCam(); class="ui-btn ui-btn-icon-left ui-icon-delete">Cancelar</a> 
 		    <!--<a onclick=micosa(); class="ui-btn ui-btn-icon-left ui-icon-check">Guardar</a> -->
 		
 	    </div>
     	</div>
 
 </div>
-<!--	<script type="text/javascript">
-	         // $(window).load(function(){ console.log('La jodida ostias'); })
-		document.onload = function() {
-			console.log('LOL');
-		}
-
-	</script>-->

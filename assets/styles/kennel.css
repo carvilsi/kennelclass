@@ -1,0 +1,7 @@
+ video_div {
+	 width: 120px;
+	 height: 140px;
+	 background: rgba(255,255,255,0.5);
+	 border: 1px solid #ccc;
+	 margin-left: 120px;
+ }

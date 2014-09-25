@@ -37,6 +37,7 @@ var color = 'color=';
 var edad = 'edad=';
 var caracter = 'caracter=';
 var problemasMedicos = 'problemasMedicos=';
+var imagen = 'imagen=';
 
 var fechaServicio = 'fechaServicio=';
 var horaServicio = 'horaServicio=';
@@ -51,8 +52,19 @@ var update = '/ficha/update/';
 
 var and = '&';
 
+
+var uriImage = '';
+var cam = false;
+
 /**
- * Para guardar una ficha nueva
+(function() {
+	console.log('pues salgo');
+})();
+*/
+
+
+/**
+ * Para guardar una ficha nueva o una que se ha editado
  */
 
 function save() {
@@ -72,11 +84,18 @@ function save() {
             		edad + $('#textinput-edad').val() + and +
             		caracter + $('#textinput-car').val() + and +
             		problemasMedicos + $('#textarea-prob').val();
+	if (uriImage) {
+		var ur = uriImage.replace('data:image/jpeg;base64,','');
+		var uri1 = encodeURIComponent(ur);
+		rest += and + imagen + uri1;
+	}
 	$.post(rest, function (resp){
 		console.log('guardado OK');
+		uriImage = '';
 	}).fail(function (){
 		console.log('guardado NOK');
 	});
+	resetCam();
 }
 
 /**
@@ -94,6 +113,7 @@ function saveServicio() {
 
 	$.post(rest, function (response) {
 			$.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
+				console.log('' + res);
 		}).fail(function() {
 			console.log('error com.');
 		});
@@ -111,8 +131,9 @@ function buscaFichas() {
 	var busca = $('#busqueda-fichas').val();
 	$.get('/ficha?where={"nombre":{"contains":"' + busca +'"}}',function (data) {
 		$('#ul-fichas').empty();
-		data.forEach(function(ficha){	    
-			$('#ul-fichas').append('<li id=' + ficha.id  +'><a href="/fichas"><h2>Nombre: ' + ficha.nombre + '</h2><p>Propietario: ' + ficha.propietario  + '</p><p>email: ' + ficha.email + '</p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
+		data.forEach(function(ficha){	   
+	       	        var imagen = ficha.imagen ? '<img src="data:image/jpeg;base64,' +  ficha.imagen + '"/>' : ''; 
+			$('#ul-fichas').append('<li id=' + ficha.id  +'><a href="/fichas">' + imagen + '<h2>Nombre: ' + ficha.nombre + '</h2><p>Propietario: ' + ficha.propietario  + '</p><p>email: ' + ficha.email + '</p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
 		$('#ul-fichas').listview('refresh');
 		});
 	}).fail(function() {
@@ -138,6 +159,11 @@ function borraID() {
 	localStorage.removeItem("id");
 }
 
+
+/**
+ * Carga las fichas cuando tenemos un id
+ */
+ 
 function cargaFichas() {
 	if (localStorage.id) {
 		var url = document.location.href;
@@ -153,6 +179,9 @@ function cargaFichas() {
 					$('#textinput-edad').val(datos.edad);
 					$('#textinput-car').val(datos.caracter);
 					$('#textarea-prob').val(datos.problemasMedicos);
+					if (datos.imagen) {
+						$('#retrato').append('<img src="data:image/jpeg;base64,' + datos.imagen + '"/>');
+					}
 				},100);
 			}).fail(function() {
 				console.log('error com.');
@@ -162,5 +191,59 @@ function cargaFichas() {
 		console.log('no existo');
 	}
 }
+
+/**
+ * inicia la cosa de la foto…
+ * TODO: mirar a ver de hacerlo cuando se inicia, de esta manera no se crean falsas esperanzas para los exploradores que no lo soportan y nos 
+ * ahorramos un click
+ */
+
+function foto() {
+	try{
+		Webcam.set({
+			width: 150,
+			height: 150,
+			dest_width: 150,
+			dest_height: 130,
+			image_format: 'jpeg',
+			jpeg_quality: 90,
+			force_flash: false
+		    });
+		Webcam.attach('#camara');	
+		} 
+	catch (err) {
+		console.log('Algún problema con la cámara ' +  err.message);
+	}
+	$('#foto').css('display','none');
+	$('#hacerFoto').css('display','inline');
+	Webcam.on( 'live', function() {
+		cam = true;	      
+	} );
+}
+
+/**
+ * Toma la imagen que se ve en la previsualización
+ */
+
+function hacerFoto() {
+	Webcam.snap( function(data_uri) {
+		uriImage = data_uri;
+		$('img').remove();
+		$('#retrato').append('<img src="'+data_uri+'"/>');
+	});
+}
+
+/**
+ * resetea la cámara para que no esté ahí funcionando cuando salimos de la página de fichas
+ */
+
+
+function resetCam() {
+	if (Webcam && cam)  {
+		Webcam.reset();
+		cam = false;
+	}
+}
+
 
 
