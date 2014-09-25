@@ -8,7 +8,6 @@
 module.exports = {
 
   attributes: {
-//	id: { primaryKey: true }
   	serviciosPrestados: { collection: 'servicio', via: 'serv'}
   }
 };
