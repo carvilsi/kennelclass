@@ -7,7 +7,7 @@
 			<h6>Fichas</h6> 
     	</div>
 
-	</br>
+	<br>
 
 	<div id="content" style="margin-left: 10px">
 	    <fieldset class="ui-grid-a">
@@ -102,7 +102,7 @@
 
 			</div> 
 		</fieldset>
-		</br>
+		<br>
 		<div id="div-servicios" style="display:none">
 		<h3 class="ui-bar ui-bar-a ui-corner-all" title="Servicios Prestados">Servicios</h3>
 			<table data-role="table" id="tabla-servicios"  class="ui-body-d ui-shadow table-stripe ui-responsive">
@@ -117,15 +117,51 @@
 			</table>
 		</div>
 	</div>
+	<div data-role="popup" id="citaFicha" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+                <h3>Dar cita</h3>
+                                <fieldset class="ui-grid-a">
+                                        <div class="ui-block-a">
+                                                <div style="width:100%" id="ui-field-contain">
+                                                        <label for="fecha-servicioFicha">Fecha:</label>
+                                                       <input id="fecha-servicioFicha"  name="fecha-servicioFicha"  type="date">
+                                                </div>
+                                        </div>
+                                        <div class="ui-block-b">
+                                                <div style="width:100%" id="ui-field-contain">
+                                                        <label for="input-horaFicha">Hora:</label>
+                                                        <input name="input-horaFicha" id="input-horaFicha" type="time">
+                                                </div>
+                                        </div>
+                                </fieldset>
+                        <fieldset class="ui-grid-a">
+                                <div class="ui-block-a">
+                                        <div style="width:90%" id="ui-field-contain">
+                                                <label for="textarea-servicioFicha">Servicio:</label>
+                                                <textarea rows="9" name="textarea-servicioFicha" id="textarea-servicioFicha"></textarea>
+                                        </div>
+                                </div>
+                                <div class="ui-block-b">
+                                        <div style="width:50%" id="ui-field-contain">
+                                                <label for="textinput-precioFicha">Precio:</label>
+                                                <input data-clear-btn="true"  name="textinput-precioFicha" id="textinput-precioFicha" placeholder="" value="" type="number">
+                                        </div>
+                                </div>
+                        </fieldset>
+                <a href="index.html" onClick="saveServicio('Ficha');"  data-rel="back" class="ui-shadow ui-btn ui-corner-all  ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Guardar</a>
+                <a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left  ui-btn-inline ui-mini">Cancelar</a>
+
+        </div>
+
 	<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 	    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
-	        <a href="/" onclick=resetCam(); class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
+	        <a href="/" onclick=borraID(); class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
 	    </div>
 	    <h6>Kennel Class</h6>
     	    <div  data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
 		    <a href="/" onclick=save(); class="ui-btn ui-btn-icon-left ui-icon-check">Guardar</a> 
-		    <a href="/" onclick=resetCam(); class="ui-btn ui-btn-icon-left ui-icon-back">Cancelar</a> 
-		    <a href="/" onclick=borra(); class="ui-btn ui-btn-icon-left ui-icon-delete" title="Elimina la ficha\n no se puede deshacer el cambio">Borrar</a> 
+		    <a href="/" onclick=borraID(); class="ui-btn ui-btn-icon-left ui-icon-back">Cancelar</a> 
+		    <a href="/" onclick=borra(); class="ui-btn ui-btn-icon-left ui-icon-delete" title="Elimina la ficha\n no se puede deshacer el cambio">Borrar</a>
+		    <a href="#citaFicha" data-rel="popup" class="ui-btn ui-btn-icon-left ui-icon-calendar"  data-position-to="window"  data-transition="pop">Dar cita</a> 
 	    </div>
     	</div>
 

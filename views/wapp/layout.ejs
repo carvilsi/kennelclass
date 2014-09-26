@@ -45,9 +45,47 @@
     </div>	
     <%- body %>
 
+<div data-role="popup" id="cita" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+                <h3>Dar cita</h3>
+                                <fieldset class="ui-grid-a">
+                                        <div class="ui-block-a">
+                                                <div style="width:100%" id="ui-field-contain">
+                                                        <label for="fecha-servicio">Fecha:</label>
+                                                       <input id="fecha-servicio"  name="fecha-servicio"  type="date">
+                                                       <!--  <input name="fecha-servicio" data-role="date" type="text"> -->
+                                                </div>
+                                        </div>
+                                        <div class="ui-block-b">
+                                                <div style="width:100%" id="ui-field-contain">
+                                                        <label for="input-hora">Hora:</label>
+                                                        <input name="input-hora" id="input-hora" type="time">
+                                                </div>
+                                        </div>
+                                </fieldset>
+                        <fieldset class="ui-grid-a">
+                                <div class="ui-block-a">
+                                        <div style="width:90%" id="ui-field-contain">
+                                                <label for="textarea-servicio">Servicio:</label>
+                                                <textarea rows="9" name="textarea-servicio" id="textarea-servicio"></textarea>
+                                        </div>
+                                </div>
+                                <div class="ui-block-b">
+                                        <div style="width:50%" id="ui-field-contain">
+                                                <label for="textinput-precio">Precio:</label>
+                                                <input data-clear-btn="true"  name="textinput-precio" id="textinput-precio" placeholder="" value="" type="number">
+                                        </div>
+                                </div>
+                        </fieldset>
+                <a href="index.html" onClick="saveServicio('');"  data-rel="back" class="ui-shadow ui-btn ui-corner-all  ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Guardar</a>
+                <a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left  ui-btn-inline ui-mini">Cancelar</a>
+
+        </div>
+
+
+
 <div data-role="footer" data-position="fixed" data-tap-toggle="false">
 	<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
-		<a href="/" class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
+		<a href="/" onclick="limpiarLista();"  class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
 	</div>
 	<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
 		<a href="/fichas" onClick="borraID();"  class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>

@@ -101,6 +101,7 @@ function save() {
 
 /**
  * elimina una ficha
+ * TODO poner un aviso (con validación) al usuario de que la cosa se borrará y es irreversible
  */
 
 function borra() {
@@ -118,19 +119,19 @@ function borra() {
 /**
  * Guardar un servicio prestado a un perro 
  *  y asociarlo a una ficha 
+ *  TODO ver por que no puedo usar un solo layout.ejs para toda la aplicación :\
 */
 
 
-function saveServicio() {
+function saveServicio(v) {
 	var rest = createServicio +
-		fechaServicio + $('#fecha-servicio').val() + and +
-		horaServicio + $('#input-hora').val() + and +
-		conceptoServicio + $('#textarea-servicio').val() + and +
-		precioServicio + $('#textinput-precio').val();
+		fechaServicio + $('#fecha-servicio' + v).val() + and +
+		horaServicio + $('#input-hora' + v).val() + and +
+		conceptoServicio + $('#textarea-servicio' + v).val() + and +
+		precioServicio + $('#textinput-precio' + v).val();
 
 	$.post(rest, function (response) {
 			$.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
-				console.log('' + res);
 		}).fail(function() {
 			console.log('error com.');
 		});
@@ -142,6 +143,7 @@ function saveServicio() {
 
 /**
  * Para la cosa de la búsqueda de las fichas
+ * TODO que esto se inicialice cuando se sale de aquí
  */
 
 function buscaFichas() {
@@ -174,10 +176,13 @@ $('#ul-fichas').on('click', 'li', function() {
 
 /**
  * para borrar el ID esto es cuando quiero crear una nueva ficha
+ * también limpiamos la lista
  */
 
 function borraID() {
 	localStorage.removeItem("id");
+	limpiarLista();
+	resetCam();
 }
 
 
@@ -275,5 +280,7 @@ function resetCam() {
 	}
 }
 
-
+function limpiarLista() {
+	$('#ul-fichas').empty().listview("refresh");
+}
 
