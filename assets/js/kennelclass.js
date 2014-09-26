@@ -49,6 +49,7 @@ var precioServicio = 'precioServicio=';
 var create = '/ficha/create?';
 var createServicio = '/servicio/create?';
 var update = '/ficha/update/';
+var deleteFicha = '/ficha/destroy/';
 
 var and = '&';
 
@@ -99,6 +100,22 @@ function save() {
 }
 
 /**
+ * elimina una ficha
+ */
+
+function borra() {
+	var rest;
+	if (localStorage.id) {
+		rest = deleteFicha + localStorage.id;
+		$.get(rest, function (res){
+			console.log('ficha eliminada OK');
+		}).fail(function (){
+			console.log('error al intentar eliminar la ficha NOK :/');
+		});
+	}
+}
+
+/**
  * Guardar un servicio prestado a un perro 
  *  y asociarlo a una ficha 
 */
@@ -133,7 +150,11 @@ function buscaFichas() {
 		$('#ul-fichas').empty();
 		data.forEach(function(ficha){	   
 	       	        var imagen = ficha.imagen ? '<img src="data:image/jpeg;base64,' +  ficha.imagen + '"/>' : ''; 
-			$('#ul-fichas').append('<li id=' + ficha.id  +'><a href="/fichas">' + imagen + '<h2>Nombre: ' + ficha.nombre + '</h2><p>Propietario: ' + ficha.propietario  + '</p><p>email: ' + ficha.email + '</p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
+			$('#ul-fichas').append('<li id=' + ficha.id  +'><a href="/fichas" style="padding-right: 80px;">' + imagen +
+					       '<h1>Nombre: <strong>' + ficha.nombre +
+					       '</strong></h1><p>Raza: <strong>' + ficha.raza  +
+					       '</strong></p><p>Problemas Médicos: <strong><font style="white-space:normal; font-size: small">' + ficha.problemasMedicos +
+					       '</font></strong></p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
 		$('#ul-fichas').listview('refresh');
 		});
 	}).fail(function() {
@@ -181,6 +202,15 @@ function cargaFichas() {
 					$('#textarea-prob').val(datos.problemasMedicos);
 					if (datos.imagen) {
 						$('#retrato').append('<img src="data:image/jpeg;base64,' + datos.imagen + '"/>');
+					}
+					if (datos.serviciosPrestados.length != 0) {
+						$('#div-servicios').css('display','inline');
+						datos.serviciosPrestados.forEach(function(servicio){
+							$('#tabla-servicios').append('<tr><td>' + servicio.fechaServicio + '</td><td>' +
+										     servicio.horaServicio + '</td><td>' + 
+										     servicio.conceptoServicio + '</td><td>' + 
+										     servicio.precioServicio + '</td></tr>'); 
+						});				
 					}
 				},100);
 			}).fail(function() {

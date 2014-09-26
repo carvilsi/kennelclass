@@ -2,6 +2,9 @@
 	</br>
 	</br>
 	<div id="contenido">
+		<h3 class="ui-bar ui-bar-a ui-corner-all" title="Listado de Citas">Citas</h3>
+		</br>
+		<h3 class="ui-bar ui-bar-a ui-corner-all" title="B&uacute;squeda de Fichas">Fichas</h3>
 		<div id="ui-field-contain">
 			<!--		<label for="search-1">Busqueda:</label> -->
 			<input onKeyUp="buscaFichas()"  name="busqueda-fichas" id="busqueda-fichas" value="" type="search">
@@ -11,13 +14,12 @@
 		<ul data-role="listview" id="ul-fichas" data-split-theme="a"  data-split-icon="calendar"  data-inset="true">
 		</ul>
 	</div>
+
+	<!--   POPUP PARA DAR CITAS -->
+
 	<div data-role="popup" id="cita" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
 		<h3>Dar cita</h3>
-		<!--	<a href="index.html" onClick="prueba();"  data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Buy: $10.99</a>
-		<a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-mini">Cancel</a> -->
-	<!--	<fieldset class="ui-grid-b"> -->
-			<!-- <div class="ui-block-a"> -->
-                                <fieldset class="ui-grid-a">
+				<fieldset class="ui-grid-a">
                                         <div class="ui-block-a">
                                                 <div style="width:100%" id="ui-field-contain">
                                                         <label for="fecha-servicio">Fecha:</label>
@@ -32,7 +34,6 @@
                                                 </div>
                                         </div>
                                 </fieldset>
-				<!-- </div>-->
 			<fieldset class="ui-grid-a">	
 				<div class="ui-block-a">
                         		<div style="width:90%" id="ui-field-contain">
@@ -43,7 +44,7 @@
                 		<div class="ui-block-b">
                         		<div style="width:50%" id="ui-field-contain">
                                 		<label for="textinput-precio">Precio:</label>
-                                		<input data-clear-btn="true"  name="textinput-precio" id="textinput-precio" placeholder="" value="" type="text">
+                                		<input data-clear-btn="true"  name="textinput-precio" id="textinput-precio" placeholder="" value="" type="number">
                         		</div>
                 		</div>
         		</fieldset>

@@ -101,7 +101,21 @@
 				</div>
 
 			</div> 
-	</fieldset>
+		</fieldset>
+		</br>
+		<div id="div-servicios" style="display:none">
+		<h3 class="ui-bar ui-bar-a ui-corner-all" title="Servicios Prestados">Servicios</h3>
+			<table data-role="table" id="tabla-servicios"  class="ui-body-d ui-shadow table-stripe ui-responsive">
+				<thead>
+				     <tr class="ui-bar-d">
+					     <th>Fecha</th>
+					     <th>Hora</th>
+					     <th>Concepto</th>
+					     <th>Precio</th>
+				     </tr>
+				 </thead>			
+			</table>
+		</div>
 	</div>
 	<div data-role="footer" data-position="fixed" data-tap-toggle="false">
 	    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
@@ -110,9 +124,8 @@
 	    <h6>Kennel Class</h6>
     	    <div  data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
 		    <a href="/" onclick=save(); class="ui-btn ui-btn-icon-left ui-icon-check">Guardar</a> 
-		    <a href="/" onclick=resetCam(); class="ui-btn ui-btn-icon-left ui-icon-delete">Cancelar</a> 
-		    <!--<a onclick=micosa(); class="ui-btn ui-btn-icon-left ui-icon-check">Guardar</a> -->
-		
+		    <a href="/" onclick=resetCam(); class="ui-btn ui-btn-icon-left ui-icon-back">Cancelar</a> 
+		    <a href="/" onclick=borra(); class="ui-btn ui-btn-icon-left ui-icon-delete" title="Elimina la ficha\n no se puede deshacer el cambio">Borrar</a> 
 	    </div>
     	</div>
 

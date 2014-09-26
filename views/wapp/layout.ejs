@@ -38,7 +38,7 @@
   <body>
  <div data-role="header">
 	    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-		    <a href="/fichas" onClick="borraID();"  class="ui-btn ui-btn-icon-left ui-icon-home">Fichas</a>
+		<a href="/fichas" onClick="borraID();"  class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
 	    </div>
 	    <img src="/images/logo.png" class="ui-btn-left" style="height: 2.8em" />
 	    <h6>Inicio</h6>
@@ -46,17 +46,20 @@
     <%- body %>
 
 <div data-role="footer" data-position="fixed" data-tap-toggle="false">
-            <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
-                <a href="/" class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
-            </div>
+	<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
+		<a href="/" class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
+	</div>
+	<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
+		<a href="/fichas" onClick="borraID();"  class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
+	</div>
             <h6>Kennel Class</h6>
-            <div  data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-                   <!-- <a href="/" onclick=save(); class="ui-btn ui-btn-icon-left ui-icon-check">Guardar</a>
+        <!--    <div  data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
+                    <a href="/" onclick=save(); class="ui-btn ui-btn-icon-left ui-icon-check">Guardar</a>
                     <a href="/" class="ui-btn ui-btn-icon-left ui-icon-delete">Cancelar</a>
-                    <a onclick=micosa(); class="ui-btn ui-btn-icon-left ui-icon-check">Guardar</a> -->
+                    <a onclick=micosa(); class="ui-btn ui-btn-icon-left ui-icon-check">Guardar</a> 
 
-            </div>
-        </div>
+	    </div>  -->
+</div>
 
 
     <!--
