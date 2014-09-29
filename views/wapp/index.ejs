@@ -1,55 +1,34 @@
 <!--<body> -->
-	</br>
-	</br>
+	<br>
+	<br>
 	<div id="contenido">
-		<h3 class="ui-bar ui-bar-a ui-corner-all" title="Listado de Citas">Citas</h3>
+		<h3 id="cabecera-citas" class="ui-bar ui-bar-a ui-corner-all" title="Listado de Citas" align="center">Citas</h3>
+		<div class="ui-body ui-body-a ui-corner-all">
+			<div class="ui-grid-d">
+				<div class="ui-block-a">
+					<a href="#" title="Uno menos" onclick=buscaServicios(-1); class="ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-corner-all">Uno menos</a>
+				</div>
+				<div class="ui-block-b"></div>
+				<div class="ui-block-c" align="center">
+					<a href="#" onclick=buscaServicios(0); class="ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Hoy</a>
+				</div>
+				<div class="ui-block-d"></div>
+				<div class="ui-block-e" align="right">
+					<a href="#" onclick=buscaServicios(1); class="ui-btn ui-icon-arrow-r ui-btn-icon-notext ui-corner-all" title="Uno más">Uno más</a>
+				</div>
+			</div>
+		</div>
+		<ul data-role="listview" data-inset="true" id="ul-servicios">
+		</ul>
 		<br>
 		<br>
-		<h3 class="ui-bar ui-bar-a ui-corner-all" title="B&uacute;squeda de Fichas">Fichas</h3>
-		<div id="ui-field-contain">
-			<!--		<label for="search-1">Busqueda:</label> -->
+		<h3 class="ui-bar ui-bar-a ui-corner-all" title="B&uacute;squeda de Fichas" align="center">Fichas</h3>
+		<div id="ui-field-contain" >
 			<input onKeyUp="buscaFichas()"  name="busqueda-fichas" id="busqueda-fichas" value="" type="search">
 		</div>	
-	</div>
-	<div id="lista-fichas">
+	<div id="lista-fichas" >
 		<ul data-role="listview" id="ul-fichas" data-split-theme="a"  data-split-icon="calendar"  data-inset="true">
 		</ul>
 	</div>
 
-	<!--   POPUP PARA DAR CITAS -->
-
-<!--	<div data-role="popup" id="cita" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
-		<h3>Dar cita</h3>
-				<fieldset class="ui-grid-a">
-                                        <div class="ui-block-a">
-                                                <div style="width:100%" id="ui-field-contain">
-                                                        <label for="fecha-servicio">Fecha:</label>
-						       <input id="fecha-servicio"  name="fecha-servicio"  type="date"> 
-                                                </div>
-                                        </div>
-                                        <div class="ui-block-b">
-                                                <div style="width:100%" id="ui-field-contain">
-                                                        <label for="input-hora">Hora:</label>
-                                                        <input name="input-hora" id="input-hora" type="time">
-                                                </div>
-                                        </div>
-                                </fieldset>
-			<fieldset class="ui-grid-a">	
-				<div class="ui-block-a">
-                        		<div style="width:90%" id="ui-field-contain">
-                                		<label for="textarea-servicio">Servicio:</label>
-                                		<textarea rows="9" name="textarea-servicio" id="textarea-servicio"></textarea>
-                        		</div>
-                		</div>
-                		<div class="ui-block-b">
-                        		<div style="width:50%" id="ui-field-contain">
-                                		<label for="textinput-precio">Precio:</label>
-                                		<input data-clear-btn="true"  name="textinput-precio" id="textinput-precio" placeholder="" value="" type="number">
-                        		</div>
-                		</div>
-        		</fieldset>
-		<a href="index.html" onClick="saveServicio();"  data-rel="back" class="ui-shadow ui-btn ui-corner-all  ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Guardar</a>
-		<a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left  ui-btn-inline ui-mini">Cancelar</a> 
-	
-	</div>-->
-	<!--</body>-->
+	</div>

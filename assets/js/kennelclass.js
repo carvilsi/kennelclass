@@ -57,11 +57,24 @@ var and = '&';
 var uriImage = '';
 var cam = false;
 
-/**
+var hoy;
+var daemon = true;
+
+
 (function() {
-	console.log('pues salgo');
+	hoy = new Date();
+	buscaServicios(0);
+/**	if (daemon) {
+		setInterval(function(){
+		   console.log('me ejecuto');
+		}, 5000);	 
+	}*/
+//$('#ul-servicios').delegate('li','click', function(){
+//	console.log('si que llego');
+	//$(this).css('background-color', 'green');   
+//});
 })();
-*/
+
 
 
 /**
@@ -132,23 +145,22 @@ function saveServicio(v) {
 
 	$.post(rest, function (response) {
 			$.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
-		}).fail(function() {
+				buscaServicios(0);
+			}).fail(function() {
 			console.log('error com.');
 		});
 	}).fail(function() {
 			console.log('error com.');
 		});
-
 }
 
 /**
  * Para la cosa de la búsqueda de las fichas
- * TODO que esto se inicialice cuando se sale de aquí
  */
 
 function buscaFichas() {
 	var busca = $('#busqueda-fichas').val();
-	$.get('/ficha?where={"nombre":{"contains":"' + busca +'"}}',function (data) {
+	$.get('/ficha?where={"nombre":{"contains":"' + busca +'"}}&limit=50',function (data) {
 		$('#ul-fichas').empty();
 		data.forEach(function(ficha){	   
 	       	        var imagen = ficha.imagen ? '<img src="data:image/jpeg;base64,' +  ficha.imagen + '"/>' : ''; 
@@ -164,6 +176,36 @@ function buscaFichas() {
 		});
 
 }
+
+/**
+ * para buscar los servicios de un día concreto
+ * con respecto a la fecha actual
+ */
+
+function buscaServicios(d) {
+	hoy = d == 0 ? new Date() : addDays(hoy, d);
+/**	if ($('#pf')){
+		$('#pf').remove();
+	}*/
+	var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);	
+//	$.get('servicio?where={"fechaServicio":"' + hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + hoy.getDate() + '"}&sort=horaServicio%20ASC', function(data) {
+	$.get('servicio?where={"fechaServicio":"' + avui + '"}&sort=horaServicio%20ASC', function(data) {
+		$('#ul-servicios').empty();
+		data.forEach(function(servicio) {
+			if(servicio.serv){
+				$('#ul-servicios').append('<li id="' + servicio.id + '"><a href="#"><h1>' + servicio.horaServicio +
+						  '  :  ' + servicio.conceptoServicio +
+						  '</h1><p>Nombre: ' + servicio.serv.nombre + '</p>');	
+				$('#ul-servicios').listview('refresh');
+			}
+		
+		});
+		$('#cabecera-citas').text(avui);
+	}).fail(function(){
+		console.log('error com.');
+	});
+}
+
 
 /**
  * para quedarme con la cosa del id de la ficha que estoy trabajando

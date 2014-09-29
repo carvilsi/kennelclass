@@ -40,7 +40,8 @@ module.exports.routes = {
   },
   'get /servicios': {
 	  view: 'servicios/'
-  }
+  },
+  'GET /servicio/todos':'ServicioController.buscaAhora'
 
   /***************************************************************************
   *                                                                          *

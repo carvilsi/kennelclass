@@ -6,6 +6,20 @@
  */
 
 module.exports = {
-	
+	buscaAhora: function(req, res) {
+		var fecha = req.param('fecha');
+		var hora = req.param('hora');
+		Servicio.find().where({
+			fechaServicio:  fecha
+		//	horaServicio: { '>': hora }
+		})		
+		.exec(function (err, servicios) {
+		if (err) {
+			res.send(400);
+		} else {
+			res.send(servicios);
+		}
+		});
+	}	
 };
 

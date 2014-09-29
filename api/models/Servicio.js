@@ -9,7 +9,13 @@ module.exports = {
 
   attributes: {
 //	 id: { primaryKey: true }
-  	serv: {model: 'Ficha'}
+  	serv: {model: 'Ficha'},
+	conceptoServicio: { type: 'string'},
+	horaServicio: { type: 'string'},
+	fechaServicio: { type: 'string'},
+	updatedAt: { type: 'string'},
+	createdAt: { type: 'string'},
+	precioServicio: { type: 'integer'}
   }
 };
 
