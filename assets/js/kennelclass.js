@@ -58,7 +58,7 @@ var uriImage = '';
 var cam = false;
 
 var hoy;
-var daemon = true;
+// var daemon = true;
 
 
 (function() {
@@ -114,18 +114,25 @@ function save() {
 
 /**
  * elimina una ficha
- * TODO poner un aviso (con validación) al usuario de que la cosa se borrará y es irreversible
  */
 
-function borra() {
+function borraFicha() {
 	var rest;
 	if (localStorage.id) {
-		rest = deleteFicha + localStorage.id;
-		$.get(rest, function (res){
-			console.log('ficha eliminada OK');
+		$.get('/servicio/elimina?id=' + localStorage.id, function (res){
+			console.log('servicios asociados con la ficha eliminados');
+			rest = deleteFicha + localStorage.id;
+			$.get(rest, function (res){
+				console.log('ficha eliminada OK');
+				borraID();
+				buscaServicios(0);				
+			}).fail(function (){
+				console.log('error al intentar eliminar la ficha NOK :/');
+			});
 		}).fail(function (){
-			console.log('error al intentar eliminar la ficha NOK :/');
+			console.log('error al intantar eliminar servicios asociados a la ficha');
 		});
+
 	}
 }
 
@@ -174,7 +181,6 @@ function buscaFichas() {
 	}).fail(function() {
 			console.log('error com.');
 		});
-
 }
 
 /**
@@ -184,11 +190,7 @@ function buscaFichas() {
 
 function buscaServicios(d) {
 	hoy = d == 0 ? new Date() : addDays(hoy, d);
-/**	if ($('#pf')){
-		$('#pf').remove();
-	}*/
 	var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);	
-//	$.get('servicio?where={"fechaServicio":"' + hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + hoy.getDate() + '"}&sort=horaServicio%20ASC', function(data) {
 	$.get('servicio?where={"fechaServicio":"' + avui + '"}&sort=horaServicio%20ASC', function(data) {
 		$('#ul-servicios').empty();
 		data.forEach(function(servicio) {

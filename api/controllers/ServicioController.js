@@ -20,6 +20,28 @@ module.exports = {
 			res.send(servicios);
 		}
 		});
-	}	
+	},
+	eliminaFicha: function(req, res) {
+		var id = 'ObjectId("' + req.param('id') + '")'; 	
+		Servicio.find().where({
+			serv : req.param('id')
+		})
+		.exec(function (err, servicios) {
+			if (err) {
+				res.send(400);
+			} else {
+				servicios.forEach(function(servicio){
+					Servicio.destroy({id:servicio.id}).exec(function (err){
+						if(err){
+							res.send(400);
+						} else {
+							console.log('datos eliminados');
+						}
+					});
+				});
+				res.send(servicios);
+			}
+		});
+	}
 };
 
