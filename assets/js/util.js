@@ -1,3 +1,49 @@
+/**
+ * Para manejar la cosa de los días en la agenda diaria
+ */
+
 function addDays(theDate, days) {
 	    return new Date(theDate.getTime() + days*24*60*60*1000);
+}
+
+
+/**
+ * Para ordenar objetos (ej. JSON) con criterio de dos variables
+ */ 
+
+function dynamicSortMultiple() {
+     var props = arguments;
+    return function (obj1, obj2) {
+        var i = 0, result = 0, numberOfProperties = props.length;
+        while(result === 0 && i < numberOfProperties) {
+            result = dynamicSort(props[i])(obj1, obj2);
+            i++;
+        }
+        return result;
+    }
+}
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a,b) {
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
+}
+
+/**
+ * Para mostrar mensajes a los usuarios
+ */
+
+function mensaje(texto){
+	$('#guardar-popup').append('<p>' + texto + '</p>');
+	$('#guardar-popup').popup('open');
+	setTimeout(function(){
+		$('#guardar-popup').popup('close');
+		$('#guardar-popup').children('p').remove();	
+	},1100);
 }
