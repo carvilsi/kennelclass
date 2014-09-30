@@ -7,6 +7,9 @@ Una aplicación sencilla para gestionar una peluquería de animales (¿Perros?)
 								 /   (_____/      
 								/_____/   U       
         
+
+Demo de [kennelclass](http://5.196.11.71:1337/)
+
 Basada en [Sails](http://sailsjs.org) y [mongodb](http://www.mongodb.org/)
 
 

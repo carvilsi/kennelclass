@@ -265,9 +265,7 @@ function cargaFichas() {
 						$('#retrato').append('<img src="data:image/jpeg;base64,' + datos.imagen + '"/>');
 					}
 					if (datos.serviciosPrestados.length != 0) {
-						//var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple(datos.serviciosPrestados.fechaServicio, datos.serviciosPrestados.horaServicio));
 						var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
-						console.log(ordenados);
 						$('#div-servicios').css('display','inline');
 						datos.serviciosPrestados.forEach(function(servicio){
 							$('#tabla-servicios').append('<tr><td>' + servicio.fechaServicio + '</td><td>' +
@@ -280,9 +278,9 @@ function cargaFichas() {
 			}).fail(function() {
 				console.log('error com.');
 			});
-		}
-	 else {
-		console.log('no existo');
+		} else {
+		/**	console.log('no tengo id en localStorage');
+			$('#botonBorrarFicha').css('display','none');*/
 	}
 }
 
@@ -337,4 +335,11 @@ function resetCam() {
 		Webcam.reset();
 		cam = false;
 	}
+}
+
+/**
+ * Limpia la lista de fichas en la página principal
+ */
+function limpiarLista() {
+	$('#ul-fichas').empty().listview("refresh");
 }

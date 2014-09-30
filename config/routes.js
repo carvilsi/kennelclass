@@ -36,7 +36,7 @@ module.exports.routes = {
     view: 'wapp'
   },
   'get /fichas': {
-	  view: 'fichas/'    
+	  view: 'fichas/'
   },
   'get /servicios': {
 	  view: 'servicios/'
