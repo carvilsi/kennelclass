@@ -10,6 +10,10 @@ Una aplicación sencilla para gestionar una peluquería de animales (¿Perros?)
 
 Demo de [kennelclass](http://5.196.11.71:1337/)
 
+
+![alt img_demo](http://5.196.11.71/images/kennel_demo.png)
+
+
 Basada en [Sails](http://sailsjs.org) y [mongodb](http://www.mongodb.org/)
 
 
