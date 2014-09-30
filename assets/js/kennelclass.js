@@ -185,6 +185,12 @@ function buscaFichas() {
 					       '</font></strong></p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
 		$('#ul-fichas').listview('refresh');
 		});
+	//	$('#lista-fichas').scrollIntoView(true);
+//		$('#lista-fichas').scrollHeight;
+/**		setTimeout(function(){
+			$('#lista-fichas').scrollTop = $('#lista-fichas').scrolHeight;
+		},100);*/
+	       window.scrollTo(0, document.body.scrollHeight);
 	}).fail(function() {
 			console.log('error com.');
 		});
