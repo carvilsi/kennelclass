@@ -106,14 +106,8 @@ function save() {
 	$.post(rest, function (resp){
 		uriImage = '';
 		mensaje('Ficha guardada OK :)');
-	/**	$('#guardar-popup').append('<p>' + fichaGuardada + ' OK :)' + '</p>');
-		$('#guardar-popup').popup('open');
-		setTimeout(function(){
-			$('#guardar-popup').popup('close');
-		},950);*/
 	}).fail(function (){
 		mensaje('Ficha guardada NOK :(');
-	//	console.log('guardado NOK');
 	});
 	resetCam();
 }
@@ -160,7 +154,9 @@ function saveServicio(v) {
 
 	$.post(rest, function (response) {
 			$.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
-				mensaje('Servicio guardado OK :)');
+				setTimeout(function(){
+					mensaje('Servicio guardado OK :)');
+				},100);
 				buscaServicios(0);
 			}).fail(function() {
 			// console.log('error com.');

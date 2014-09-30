@@ -40,10 +40,10 @@ function dynamicSort(property) {
  */
 
 function mensaje(texto){
+	$('#guardar-popup').children('p').remove();
 	$('#guardar-popup').append('<p>' + texto + '</p>');
 	$('#guardar-popup').popup('open');
 	setTimeout(function(){
 		$('#guardar-popup').popup('close');
-		$('#guardar-popup').children('p').remove();	
 	},1100);
 }
