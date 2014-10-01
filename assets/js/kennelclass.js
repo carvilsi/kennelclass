@@ -64,15 +64,6 @@ var fichaGuardada = 'Ficha guardada';
 (function() {
 	hoy = new Date();
 	buscaServicios(0);
-/**	if (daemon) {
-		setInterval(function(){
-		   console.log('me ejecuto');
-		}, 5000);	 
-	}*/
-//$('#ul-servicios').delegate('li','click', function(){
-//	console.log('si que llego');
-	//$(this).css('background-color', 'green');   
-//});
 })();
 
 
@@ -93,7 +84,7 @@ function save() {
             		movil + $('#textinput-mov').val() + and +
             		email + $('#textinput-mail').val() + and +
             		nombre + $('#textinput-nom').val() + and +
-            		raza + $('#textinput-raza').val() + and +
+            		raza + $('#select-razas').val() + and +
             		color + $('#textinput-color').val() + and +
             		edad + $('#textinput-edad').val() + and +
             		caracter + $('#textinput-car').val() + and +
@@ -120,15 +111,12 @@ function borraFicha() {
 	var rest;
 	if (localStorage.id) {
 		$.get('/servicio/elimina?id=' + localStorage.id, function (res){
-			// console.log('servicios asociados con la ficha eliminados');
 			rest = deleteFicha + localStorage.id;
 			$.get(rest, function (res){
-			//	console.log('ficha eliminada OK');
 				mensaje('Ficha eliminada OK :)');
 				borraID();
 				buscaServicios(0);				
 			}).fail(function (){
-				// console.log('error al intentar eliminar la ficha NOK :/');
 				mensaje('error al intentar eliminar la ficha NOK :/');
 			});
 		}).fail(function (){
@@ -159,11 +147,9 @@ function saveServicio(v) {
 				},100);
 				buscaServicios(0);
 			}).fail(function() {
-			// console.log('error com.');
 			mensaje('Servicio no asociado NOK :/');
 		});
 	}).fail(function() {
-			// console.log('error com.');
 			mensaje('Servicio no guardado NOK :/');
 		});
 }
@@ -185,11 +171,6 @@ function buscaFichas() {
 					       '</font></strong></p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
 		$('#ul-fichas').listview('refresh');
 		});
-	//	$('#lista-fichas').scrollIntoView(true);
-//		$('#lista-fichas').scrollHeight;
-/**		setTimeout(function(){
-			$('#lista-fichas').scrollTop = $('#lista-fichas').scrolHeight;
-		},100);*/
 	       window.scrollTo(0, document.body.scrollHeight);
 	}).fail(function() {
 			console.log('error com.');
@@ -242,7 +223,11 @@ function borraID() {
 	resetCam();
 }
 
-
+function nuevaFicha() {
+	localStorage.removeItem("id");
+	limpiarLista();
+	rellenaRazas();
+}
 /**
  * Carga las fichas cuando tenemos un id
  */
@@ -258,7 +243,6 @@ function cargaFichas() {
 					$('#textinput-mov').val(datos.movil);
 					$('#textinput-mail').val(datos.email);
 					$('#textinput-nom').val(datos.nombre);
-					$('#textinput-raza').val(datos.raza);
 					$('#textinput-color').val(datos.color);
 					$('#textinput-edad').val(datos.edad);
 					$('#textinput-car').val(datos.caracter);
@@ -277,13 +261,13 @@ function cargaFichas() {
 						});				
 					}
 				},100);
+				rellenaRazas(datos.raza);
 			}).fail(function() {
 				console.log('error com.');
 			});
 		} else {
-		/**	console.log('no tengo id en localStorage');
-			$('#botonBorrarFicha').css('display','none');*/
-	}
+			console.log('Error en localStorage :/');
+		}
 }
 
 /**

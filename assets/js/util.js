@@ -47,3 +47,22 @@ function mensaje(texto){
 		$('#guardar-popup').popup('close');
 	},1100);
 }
+
+/**
+ * para rellenar el combobox con las razas
+ */
+
+function rellenaRazas(razaPerro){
+	$.get('/razas?limit=350',function(razas){
+		razas.forEach(function(raza){
+			var option = '<option value="' + raza.nombre + '">' + raza.nombre  + '</option>';
+			if (razaPerro && razaPerro == raza.nombre) {
+				option = '<option value="' + raza.nombre + '" selected="selected">' + raza.nombre  + '</option>'
+			}		
+			$('#select-razas').append(option);
+			$('#select-razas').selectmenu( "refresh" );
+		});
+	}).fail(function(){
+		console.log('error al intentar traer las razas :(');
+	});
+}

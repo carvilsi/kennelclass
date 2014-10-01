@@ -38,7 +38,7 @@
   <body>
  <div data-role="header">
 	    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-		<a href="/fichas" onClick="borraID();"  class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
+		<a href="/fichas" onClick="nuevaFicha();"  class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
 	    </div>
 	    <img src="/images/logo.png" class="ui-btn-left" style="height: 2.8em" />
 	    <h6>Inicio</h6>
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="ui-block-b">
                                         <div style="width:50%" id="ui-field-contain">
-                                                <label for="textinput-precio">Precio:</label>
+                                                <label for="textinput-precio">Precio &euro;:</label>
                                                 <input data-clear-btn="true"  name="textinput-precio" id="textinput-precio" placeholder="" value="" type="number">
                                         </div>
                                 </div>
@@ -90,7 +90,7 @@
 		<a href="/" onclick="limpiarLista();"  class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
 	</div>
 	<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-		<a href="/fichas" onClick="borraID();"  class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
+		<a href="/fichas" onClick="nuevaFicha('');"  class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
 	</div>
             <h6>Kennel Class</h6>
         <!--    <div  data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
