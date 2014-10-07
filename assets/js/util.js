@@ -45,7 +45,7 @@ function mensaje(texto){
 	$('#guardar-popup').popup('open');
 	setTimeout(function(){
 		$('#guardar-popup').popup('close');
-	},1100);
+	},1500);
 }
 
 /**
@@ -57,8 +57,8 @@ function rellenaRazas(razaPerro){
 		razas.forEach(function(raza){
 			var option = '<option value="' + raza.nombre + '">' + raza.nombre  + '</option>';
 			if (razaPerro && razaPerro == raza.nombre) {
-				option = '<option value="' + raza.nombre + '" selected="selected">' + raza.nombre  + '</option>'
-			}		
+				option = '<option value="' + raza.nombre + '" selected="selected">' + raza.nombre  + '</option>';
+			} 
 			$('#select-razas').append(option);
 			$('#select-razas').selectmenu( "refresh" );
 		});

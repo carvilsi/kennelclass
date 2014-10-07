@@ -226,7 +226,10 @@ function borraID() {
 function nuevaFicha() {
 	localStorage.removeItem("id");
 	limpiarLista();
-	rellenaRazas();
+	//rellenaRazas('mestizo');
+	setTimeout(function(){
+		rellenaRazas('mestizo');
+	},100);
 }
 /**
  * Carga las fichas cuando tenemos un id
