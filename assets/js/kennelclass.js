@@ -290,6 +290,9 @@ function foto() {
 			jpeg_quality: 90,
 			force_flash: false
 		    });
+        if (Webcam.cameraIDs.length > 1) {
+            Webcam.cameraID = 1;
+        }
 		Webcam.attach('#camara');	
 		} 
 	catch (err) {
