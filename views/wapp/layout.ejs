@@ -1,90 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>KennelClass</title>
 
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-   
+
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/importer.css">
     <link rel="stylesheet" href="/styles/jquery.mobile-1.4.3.min.css">
     <link rel="stylesheet" href="/styles/kennel.css">
     <!--STYLES END-->
-  </head>
+</head>
 
-  <body>
- <div data-role="header">
-	    <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-		<a href="/fichas/nueva" onClick="nuevaFicha('');"  class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
-	    </div>
-	    <img src="/images/logo.png" class="ui-btn-left" style="height: 2.8em" />
-	    <h6>Inicio</h6>
-    </div>	
+<body>
+    <div data-role="header">
+        <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
+            <a href="/fichas/nueva" onClick="nuevaFicha('');" class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
+        </div>
+        <img src="/images/logo.png" class="ui-btn-left" style="height: 2.8em" />
+        <h6>Inicio</h6>
+    </div>
     <%- body %>
 
-<div data-role="popup" id="cita" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
-                <h3>Dar cita</h3>
-                                <fieldset class="ui-grid-a">
-                                        <div class="ui-block-a">
-                                                <div style="width:100%" id="ui-field-contain">
-                                                        <label for="fecha-servicio">Fecha:</label>
-                                                       <input id="fecha-servicio"  name="fecha-servicio"  type="date">
-                                                       <!--  <input name="fecha-servicio" data-role="date" type="text"> -->
-                                                </div>
-                                        </div>
-                                        <div class="ui-block-b">
-                                                <div style="width:100%" id="ui-field-contain">
-                                                        <label for="input-hora">Hora:</label>
-                                                        <input name="input-hora" id="input-hora" value="09:00" type="time">
-                                                </div>
-                                        </div>
-                                </fieldset>
-                        <fieldset class="ui-grid-a">
-                                <div class="ui-block-a">
-                                        <div style="width:90%" id="ui-field-contain">
-                                                <label for="textarea-servicio">Servicio:</label>
-                                                <textarea rows="9" name="textarea-servicio" id="textarea-servicio"></textarea>
-                                        </div>
-                                </div>
-                                <div class="ui-block-b">
-                                        <div style="width:50%" id="ui-field-contain">
-                                                <label for="textinput-precio">Precio &euro;:</label>
-                                                <input data-clear-btn="true"  name="textinput-precio" id="textinput-precio" placeholder="" value="" type="number">
-                                        </div>
-                                </div>
-                        </fieldset>
-                <a href="index.html" onClick="saveServicio('');"  data-rel="back" class="ui-shadow ui-btn ui-corner-all  ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Guardar</a>
-                <a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left  ui-btn-inline ui-mini">Cancelar</a>
+        <div data-role="popup" id="cita" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
+            <h3>Dar cita</h3>
+            <fieldset class="ui-grid-a">
+                <div class="ui-block-a">
+                    <div style="width:100%" id="ui-field-contain">
+                        <label for="fecha-servicio">Fecha:</label>
+                        <input id="fecha-servicio" name="fecha-servicio" type="date">
+                        <!--  <input name="fecha-servicio" data-role="date" type="text"> -->
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <div style="width:100%" id="ui-field-contain">
+                        <label for="input-hora">Hora:</label>
+                        <input name="input-hora" id="input-hora" value="09:00" type="time">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="ui-grid-a">
+                <div class="ui-block-a">
+                    <div style="width:90%" id="ui-field-contain">
+                        <label for="textarea-servicio">Servicio:</label>
+                        <textarea rows="9" name="textarea-servicio" id="textarea-servicio"></textarea>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <div style="width:50%" id="ui-field-contain">
+                        <label for="textinput-precio">Precio &euro;:</label>
+                        <input data-clear-btn="true" name="textinput-precio" id="textinput-precio" placeholder="" value="" type="number">
+                    </div>
+                </div>
+            </fieldset>
+            <a href="index.html" onClick="saveServicio('');" data-rel="back" class="ui-shadow ui-btn ui-corner-all  ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Guardar</a>
+            <a href="index.html" onClick="borraID();" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left  ui-btn-inline ui-mini">Cancelar</a>
 
         </div>
-	<div data-role="popup" id="guardar-popup" class="ui-content" data-theme="a">
-	</div>
+    
+        <div data-role="popup" id="guardar-popup" class="ui-content" data-theme="a">
+        </div>
 
 
 
-<div data-role="footer" data-position="fixed" data-tap-toggle="false">
-	<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
-		<a href="/" onclick="limpiarLista();"  class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
-	</div>
-	<div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
-		<a href="/fichas/nueva" onClick="nuevaFicha('');"  class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
-	</div>
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
+                <a href="/" onclick="limpiarLista();" class="ui-btn ui-btn-icon-left ui-icon-home">Inicio</a>
+            </div>
+            <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
+                <a href="/fichas/nueva" onClick="nuevaFicha('');" class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>
+            </div>
             <h6>Kennel Class</h6>
-     
-</div>
+
+        </div>
 
 
-   
 
-    <!--SCRIPTS-->
-    <script src="/js/dependencies/sails.io.js"></script>
-    <script src="/js/jquery-1.11.1.min.js"></script>
-    <script src="/js/jquery.mobile-1.4.3.min.js"></script>
-    <script src="/js/kennelclass.js"></script>
-    <script src="/js/util.js"></script>
-    <script src="/js/webcam.js"></script>
-    <!--SCRIPTS END-->
-  </body>
+
+        <!--SCRIPTS-->
+        <script src="/js/dependencies/sails.io.js"></script>
+        <script src="/js/jquery-1.11.1.min.js"></script>
+        <script src="/js/jquery.mobile-1.4.3.min.js"></script>
+        <script src="/js/kennelclass.js"></script>
+        <script src="/js/util.js"></script>
+        <script src="/js/webcam.js"></script>
+        <!--SCRIPTS END-->
+</body>
+
 </html>

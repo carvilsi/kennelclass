@@ -48,6 +48,7 @@ var precioServicio = 'precioServicio=';
 
 var create = '/ficha/create?';
 var createServicio = '/servicio/create?';
+var updateServicio = '/servicio/update/';
 var update = '/ficha/update/';
 var deleteFicha = '/ficha/destroy/';
 
@@ -134,24 +135,47 @@ function borraFicha() {
 
 
 function saveServicio(v) {
-	var rest = createServicio +
-		fechaServicio + $('#fecha-servicio' + v).val() + and +
-		horaServicio + $('#input-hora' + v).val() + and +
-		conceptoServicio + $('#textarea-servicio' + v).val() + and +
-		precioServicio + $('#textinput-precio' + v).val();
+    var rest;
+    if (localStorage.idServicio) {
+        try {
+            rest = updateServicio + localStorage.idServicio + '?' +
+                fechaServicio + $('#fecha-servicio' + v).val() + and +
+                horaServicio + $('#input-hora' + v).val() + and +
+                conceptoServicio + $('#textarea-servicio' + v).val() + and +
+                precioServicio + $('#textinput-precio' + v).val();
+            $.post(rest, function (res) {
+                setTimeout(function () {
+                    mensaje('Servicio actualizado OK :)');
+                }, 100);
+                buscaServicios(0);
+            }).fail(function () {
+                console.log('error comm.');
+            });
+        } catch (e) {
+            console.log('error com');
+        } finally {
+            localStorage.clear();
+        }
+    } else {
+        rest = createServicio +
+            fechaServicio + $('#fecha-servicio' + v).val() + and +
+            horaServicio + $('#input-hora' + v).val() + and +
+            conceptoServicio + $('#textarea-servicio' + v).val() + and +
+            precioServicio + $('#textinput-precio' + v).val();
 
-	$.post(rest, function (response) {
-			$.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
-				setTimeout(function(){
-					mensaje('Servicio guardado OK :)');
-				},100);
-				buscaServicios(0);
-			}).fail(function() {
-			mensaje('Servicio no asociado NOK :/');
-		});
-	}).fail(function() {
-			mensaje('Servicio no guardado NOK :/');
-		});
+        $.post(rest, function (response) {
+            $.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
+                setTimeout(function () {
+                    mensaje('Servicio guardado OK :)');
+                }, 100);
+                buscaServicios(0);
+            }).fail(function () {
+                mensaje('Servicio no asociado NOK :/');
+            });
+        }).fail(function () {
+            mensaje('Servicio no guardado NOK :/');
+        });
+    }
 }
 
 /**
@@ -189,7 +213,7 @@ function buscaServicios(d) {
 		$('#ul-servicios').empty();
 		data.forEach(function(servicio) {
 			if(servicio.serv){
-				$('#ul-servicios').append('<li id="' + servicio.id + '"><a href="#"><h1>' + servicio.horaServicio +
+				$('#ul-servicios').append('<li id="' + servicio.id + '"><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop"><h1>' + servicio.horaServicio +
 						  '  :  ' + servicio.conceptoServicio +
 						  '</h1><p>Nombre: ' + servicio.serv.nombre + '</p>');	
 				$('#ul-servicios').listview('refresh');
@@ -213,18 +237,28 @@ $('#ul-fichas').on('click', 'li', function() {
 });
 
 /**
+ * para quedarme con la cosa del id del servicio que estoy trabajando
+ */
+
+$('#ul-servicios').on('click', 'li', function() {
+	localStorage.idServicio=$(this).attr('id');
+	cargaServicio();
+});
+
+/**
  * para borrar el ID esto es cuando quiero crear una nueva ficha
  * también limpiamos la lista
  */
 
 function borraID() {
-	localStorage.removeItem("id");
+    localStorage.clear();
 	limpiarLista();
 	resetCam();
 }
 
 function nuevaFicha() {
-	localStorage.removeItem("id");
+/*	localStorage.removeItem("id");*/
+    localStorage.clear();
 	limpiarLista();
 	//rellenaRazas('mestizo');
 	setTimeout(function(){
@@ -334,4 +368,17 @@ function resetCam() {
  */
 function limpiarLista() {
 	$('#ul-fichas').empty().listview("refresh");
+}
+
+function cargaServicio() {
+    if (localStorage.idServicio) {
+        $.get('/servicio?id=' + localStorage.idServicio, function(servicio){
+            $('#fecha-servicio').val(servicio.fechaServicio);   
+            $('#input-hora').val(servicio.horaServicio);
+            $('#textarea-servicio').val(servicio.conceptoServicio);
+            $('#textinput-precio').val(servicio.precioServicio);
+        }).fail(function (){
+            console.log('error comm');
+        });
+    }
 }
