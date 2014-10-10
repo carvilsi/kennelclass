@@ -207,25 +207,25 @@ function buscaFichas() {
  */
 
 function buscaServicios(d) {
-	hoy = d == 0 ? new Date() : addDays(hoy, d);
-	var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);	
-	$.get('servicio?where={"fechaServicio":"' + avui + '"}&sort=horaServicio%20ASC', function(data) {
-		$('#ul-servicios').empty();
-		data.forEach(function(servicio) {
-			if(servicio.serv){
-				$('#ul-servicios').append('<li id="' + servicio.id + '"><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop"><h1>' + servicio.horaServicio +
-						  '  :  ' + servicio.conceptoServicio +
-						  '</h1><p>Nombre: ' + servicio.serv.nombre + '</p>');	
-				$('#ul-servicios').listview('refresh');
-			}
-		
-		});
-		$('#cabecera-citas').text(avui);
-	}).fail(function(){
-		console.log('error com.');
-	});
-}
+    hoy = d == 0 ? new Date() : addDays(hoy, d);
+    var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
+    $.get('servicio?where={"fechaServicio":"' + avui + '"}&sort=horaServicio%20ASC', function (data) {
+        $('#ul-servicios').empty();
+        data.forEach(function (servicio) {
+            if (servicio.serv) {
+                $('#ul-servicios').append('<li id="' + servicio.id + '"><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop"><h1>' + servicio.horaServicio +
+                    '  :  ' + servicio.conceptoServicio +
+                    '</h1><p>Nombre: ' + servicio.serv.nombre + '</p><a servID="' + servicio.serv.id +
+                    '" href="/fichas">Ficha</a></li>');
+                $('#ul-servicios').listview('refresh');
+            }
 
+        });
+        $('#cabecera-citas').text(avui);
+    }).fail(function () {
+        console.log('error com.');
+    });
+}
 
 /**
  * para quedarme con la cosa del id de la ficha que estoy trabajando
@@ -233,6 +233,16 @@ function buscaServicios(d) {
 
 $('#ul-fichas').on('click', 'li', function() {
 	localStorage.id=$(this).attr('id');
+	cargaFichas();
+});
+
+/**
+ * para quedarme con la cosa del id de la ficha asociada al servicio que estoy trabajando
+ */
+
+
+$('#ul-servicios').on('click', 'li a', function() {
+	localStorage.id=$(this).attr('servID');
 	cargaFichas();
 });
 
@@ -257,10 +267,8 @@ function borraID() {
 }
 
 function nuevaFicha() {
-/*	localStorage.removeItem("id");*/
     localStorage.clear();
 	limpiarLista();
-	//rellenaRazas('mestizo');
 	setTimeout(function(){
 		rellenaRazas('mestizo');
 	},100);

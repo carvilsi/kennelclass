@@ -11,7 +11,6 @@ module.exports = {
 		var hora = req.param('hora');
 		Servicio.find().where({
 			fechaServicio:  fecha
-		//	horaServicio: { '>': hora }
 		})		
 		.exec(function (err, servicios) {
 		if (err) {

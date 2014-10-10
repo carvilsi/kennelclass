@@ -1,37 +1,32 @@
-<!--<body> -->
-	<br>
-	<br>
-	<div id="contenido">
-		<h3 id="cabecera-citas" class="ui-bar ui-bar-a ui-corner-all" title="Listado de Citas" align="center">Citas</h3>
-		<div class="ui-body ui-body-a ui-corner-all">
-			<div class="ui-grid-d">
-				<div class="ui-block-a">
-					<!--	<a href="#" title="Un d&iacute;a menos" onclick=buscaServicios(-1); class="ui-btn ui-icon-arrow-l ui-btn-icon-notext ui-corner-all">Uno menos</a> -->
-					<a href="#" title="Un d&iacute;a menos" onclick=buscaServicios(-1); class="ui-btn ui-mini ui-icon-arrow-l ui-btn-icon-top  ui-corner-all">Un d&iacute;a menos</a>
-				</div>
-				<div class="ui-block-b"></div>
-				<div class="ui-block-c" align="center">
-					<a href="#" onclick=buscaServicios(0); title="El d&iacute;a de hoy" class="ui-btn ui-mini ui-icon-arrow-d ui-btn-icon-top ui-corner-all">Hoy</a><!--
-					<a href="#" onclick=buscaServicios(0); title="El d&iacute;a de hoy" class="ui-btn ui-icon-arrow-d ui-btn-icon-notext ui-corner-all">Hoy</a>-->
-				</div>
-				<div class="ui-block-d"></div>
-				<div class="ui-block-e" align="right">
-					<!--	<a href="#" onclick=buscaServicios(1); class="ui-btn ui-icon-arrow-r ui-btn-icon-notext ui-corner-all" title="Un d&iacute;a m&aacute;s">Uno m&aacute;s</a> -->
-					<a href="#" onclick=buscaServicios(1); class="ui-btn ui-icon-arrow-r ui-btn-icon-top ui-mini ui-corner-all" title="Un d&iacute;a m&aacute;s">Un d&iacute;a m&aacute;s</a>
-				</div>
-			</div>
-		</div>
-		<ul data-role="listview" data-inset="true" id="ul-servicios">
-		</ul>
-		<br>
-		<br>
-		<h3 class="ui-bar ui-bar-a ui-corner-all" title="B&uacute;squeda de Fichas" align="center">Fichas</h3>
-		<div id="ui-field-contain" >
-			<input onKeyUp="buscaFichas()"  name="busqueda-fichas" id="busqueda-fichas" value="" type="search">
-		</div>	
-	<div id="lista-fichas" >
-		<ul data-role="listview" id="ul-fichas" data-split-theme="a"  data-split-icon="calendar"  data-inset="true">
-		</ul>
-	</div>
-
-	</div>
+<br>
+<br>
+<div id="contenido">
+    <h3 id="cabecera-citas" class="ui-bar ui-bar-a ui-corner-all" title="Listado de Citas" align="center">Citas</h3>
+    <div class="ui-body ui-body-a ui-corner-all">
+        <div class="ui-grid-d">
+            <div class="ui-block-a">
+                <a href="#" title="Un d&iacute;a menos" onclick=buscaServicios(-1); class="ui-btn ui-mini ui-icon-arrow-l ui-btn-icon-top  ui-corner-all">Un d&iacute;a menos</a>
+            </div>
+            <div class="ui-block-b"></div>
+            <div class="ui-block-c" align="center">
+                <a href="#" onclick=buscaServicios(0); title="El d&iacute;a de hoy" class="ui-btn ui-mini ui-icon-arrow-d ui-btn-icon-top ui-corner-all">Hoy</a>
+            </div>
+            <div class="ui-block-d"></div>
+            <div class="ui-block-e" align="right">
+                <a href="#" onclick=buscaServicios(1); class="ui-btn ui-icon-arrow-r ui-btn-icon-top ui-mini ui-corner-all" title="Un d&iacute;a m&aacute;s">Un d&iacute;a m&aacute;s</a>
+            </div>
+        </div>
+    </div>
+    <ul data-role="listview" data-inset="true" data-split-theme="a" data-split-icon="bullets" id="ul-servicios">
+    </ul>
+    <br>
+    <br>
+    <h3 class="ui-bar ui-bar-a ui-corner-all" title="B&uacute;squeda de Fichas" align="center">Fichas</h3>
+    <div id="ui-field-contain">
+        <input onKeyUp="buscaFichas()" name="busqueda-fichas" id="busqueda-fichas" value="" type="search">
+    </div>
+    <div id="lista-fichas">
+        <ul data-role="listview" id="ul-fichas" data-split-theme="a" data-split-icon="calendar" data-inset="true">
+        </ul>
+    </div>
+</div>
