@@ -192,8 +192,7 @@ function buscaFichas() {
 					       '<h1>Nombre: <strong>' + ficha.nombre +
                            '</strong></h1><p>Dueño: <strong>' + ficha.propietario  +
 					       '</strong></h1><p>Raza: <strong>' + ficha.raza  +
-					       '</strong></p><p>Problemas Médicos: <strong><font style="white-space:normal; font-size: small">' + ficha.problemasMedicos +
-					       '</font></strong></p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
+					       '</strong></p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
 		$('#ul-fichas').listview('refresh');
 		});
 	       window.scrollTo(0, document.body.scrollHeight);
