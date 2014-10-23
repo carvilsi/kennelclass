@@ -119,6 +119,7 @@
                 </thead>
             </table>
         </div>
+        <br>
     </div>
     <div data-role="popup" id="citaFicha" data-dismissible="false" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
         <h3>Dar cita</h3>
@@ -144,7 +145,7 @@
                 </div>
             </div>
             <div class="ui-block-b">
-                <div style="width:50%" id="ui-field-contain">
+                <div style="width:70%" id="ui-field-contain">
                     <label for="textinput-precioFicha">Precio &euro;:</label>
                     <input data-clear-btn="true" name="textinput-precioFicha" id="textinput-precioFicha" placeholder="" value="" type="number">
                 </div>
@@ -152,6 +153,7 @@
         </fieldset>
         <a href="index.html" onClick="saveServicio('Ficha');" data-rel="back" class="ui-shadow ui-btn ui-corner-all  ui-icon-check ui-btn-icon-left ui-btn-inline ui-mini">Guardar</a>
         <a href="index.html" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left  ui-btn-inline ui-mini">Cancelar</a>
+        <a id="botonBorrarServicioFicha" href="index.html" onClick="borraServicio('Ficha');" data-rel="back" class="ui-shadow ui-btn ui-corner-all ui-icon-delete ui-btn-icon-left  ui-btn-inline ui-mini" style="display:none">Borrar</a>
 
     </div>
 

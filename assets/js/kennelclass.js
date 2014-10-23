@@ -190,6 +190,7 @@ function buscaFichas() {
 	       	        var imagen = ficha.imagen ? '<img src="data:image/jpeg;base64,' +  ficha.imagen + '"/>' : ''; 
 			$('#ul-fichas').append('<li id=' + ficha.id  +'><a href="/fichas" style="padding-right: 80px;">' + imagen +
 					       '<h1>Nombre: <strong>' + ficha.nombre +
+                           '</strong></h1><p>Dueño: <strong>' + ficha.propietario  +
 					       '</strong></h1><p>Raza: <strong>' + ficha.raza  +
 					       '</strong></p><p>Problemas Médicos: <strong><font style="white-space:normal; font-size: small">' + ficha.problemasMedicos +
 					       '</font></strong></p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
@@ -208,7 +209,7 @@ function buscaFichas() {
 
 function buscaServicios(d) {
     hoy = d == 0 ? new Date() : addDays(hoy, d);
-    var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
+     var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
     $.get('servicio?where={"fechaServicio":"' + avui + '"}&sort=horaServicio%20ASC', function (data) {
         $('#ul-servicios').empty();
         data.forEach(function (servicio) {
@@ -242,8 +243,10 @@ $('#ul-fichas').on('click', 'li', function() {
 
 
 $('#ul-servicios').on('click', 'li a', function() {
-	localStorage.id=$(this).attr('servID');
-	cargaFichas();
+	if ($(this).attr('servID')) {
+        localStorage.id=$(this).attr('servID');
+	    cargaFichas();
+    }
 });
 
 /**
@@ -252,7 +255,7 @@ $('#ul-servicios').on('click', 'li a', function() {
 
 $('#ul-servicios').on('click', 'li', function() {
 	localStorage.idServicio=$(this).attr('id');
-	cargaServicio();
+	cargaServicio('');
 });
 
 /**
@@ -299,10 +302,10 @@ function cargaFichas() {
 						var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
 						$('#div-servicios').css('display','inline');
 						datos.serviciosPrestados.forEach(function(servicio){
-							$('#tabla-servicios').append('<tr><td>' + servicio.fechaServicio + '</td><td>' +
-										     servicio.horaServicio + '</td><td>' + 
-										     servicio.conceptoServicio + '</td><td>' + 
-										     servicio.precioServicio + '</td></tr>'); 
+							$('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + servicio.fechaServicio + '</td><td>' +
+										     servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' + 
+										     servicio.conceptoServicio + '</a></td><th>' + 
+										     servicio.precioServicio + '</th></tr>'); 
 						});				
 					}
 				},100);
@@ -313,6 +316,11 @@ function cargaFichas() {
 		} else {
 			console.log('Error en localStorage :/');
 		}
+}
+
+function tocameFila(esto){
+    localStorage.idServicio=esto.attr('id');
+	cargaServicio('Ficha');
 }
 
 /**
@@ -378,15 +386,33 @@ function limpiarLista() {
 	$('#ul-fichas').empty().listview("refresh");
 }
 
-function cargaServicio() {
+function cargaServicio(tipo) {
+//    console.log('Si que me llega la cosa: ' + tipo);
     if (localStorage.idServicio) {
         $.get('/servicio?id=' + localStorage.idServicio, function(servicio){
-            $('#fecha-servicio').val(servicio.fechaServicio);   
-            $('#input-hora').val(servicio.horaServicio);
-            $('#textarea-servicio').val(servicio.conceptoServicio);
-            $('#textinput-precio').val(servicio.precioServicio);
+            $('#fecha-servicio' + tipo).val(servicio.fechaServicio);   
+            $('#input-hora' + tipo).val(servicio.horaServicio);
+            $('#textarea-servicio' + tipo).val(servicio.conceptoServicio);
+            $('#textinput-precio' + tipo).val(servicio.precioServicio);
+            $('#botonBorrarServicio' + tipo).css('display','inline');
         }).fail(function (){
             console.log('error comm');
         });
+    } 
+}
+
+function borraServicio(tipo) {
+    try {
+        $.get('/servicio/destroy/' + localStorage.idServicio, function (respuesta) {
+            borraID();
+            buscaServicios(0);
+        }).fail(function () {
+            mensaje("Servicio eliminado NOK :(");
+            console.log('error comm');
+        });
+    } catch (e) {
+        console.log('error comm.');
+    } finally {
+        $('#botonBorrarServicio' + tipo).css('display', 'none');
     }
 }
