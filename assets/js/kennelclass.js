@@ -102,6 +102,7 @@ function save() {
 		mensaje('Ficha guardada NOK :(');
 	});
 	resetCam();
+	recargaInicio();	
 }
 
 /**
@@ -134,9 +135,9 @@ function borraFicha() {
 */
 
 
-function saveServicio(v) {
+function guardaServicio(v) {
     var rest;
-    if (localStorage.idServicio) {
+    if (localStorage.idServicio && !localStorage.id) {
         try {
             rest = updateServicio + localStorage.idServicio + '?' +
                 fechaServicio + $('#fecha-servicio' + v).val() + and +
@@ -147,7 +148,11 @@ function saveServicio(v) {
                 setTimeout(function () {
                     mensaje('Servicio actualizado OK :)');
                 }, 100);
-                buscaServicios(0);
+                if (!v) {
+			buscaServicios(0);
+		} else {
+			refrescaTablaServicios();
+		}
             }).fail(function () {
                 console.log('error comm.');
             });
@@ -168,7 +173,11 @@ function saveServicio(v) {
                 setTimeout(function () {
                     mensaje('Servicio guardado OK :)');
                 }, 100);
-                buscaServicios(0);
+                if (!v) {
+			buscaServicios(0);
+		} else {
+			refrescaTablaServicios();
+		}
             }).fail(function () {
                 mensaje('Servicio no asociado NOK :/');
             });
@@ -177,6 +186,36 @@ function saveServicio(v) {
         });
     }
 }
+
+/**
+ *Para refrescar la lista de servicios prestados una vez que se edita en
+ *la página de Fichas perrucanidas
+ *No es la mejor práctica que me gustaría aplicar para refrescar, seguiremos investigando.
+ */
+
+function refrescaTablaServicios() {
+	$.get('/ficha?id=' + localStorage.id, function (datos) {
+		if (datos.serviciosPrestados.length != 0) {
+			if ($('#tabla-servicios tbody')) {
+				$('#tabla-servicios tbody').remove();
+			} else {
+				$('#tabla-servicios').css('display','inline');
+			}
+			var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
+			$('#tabla-servicios').append('<tbody>');
+			datos.serviciosPrestados.forEach(function(servicio){
+			$('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + servicio.fechaServicio + '</td><td>' +
+			     servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' + 
+			     servicio.conceptoServicio + '</a></td><th>' + 
+			     servicio.precioServicio + '</th></tr>'); 
+			});
+			$('#tabla-servicios').append('</tbody>');
+		}
+	}).fail(function(){
+		console.log('err comm. :()');
+	});
+}
+
 
 /**
  * Para la cosa de la búsqueda de las fichas
@@ -244,7 +283,7 @@ $('#ul-fichas').on('click', 'li', function() {
 $('#ul-servicios').on('click', 'li a', function() {
 	if ($(this).attr('servID')) {
         localStorage.id=$(this).attr('servID');
-	    cargaFichas();
+	cargaFichas();
     }
 });
 
@@ -300,12 +339,14 @@ function cargaFichas() {
 					if (datos.serviciosPrestados.length != 0) {
 						var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
 						$('#div-servicios').css('display','inline');
+						$('#tabla-servicios').append('<tbody>');
 						datos.serviciosPrestados.forEach(function(servicio){
 							$('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + servicio.fechaServicio + '</td><td>' +
 										     servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' + 
 										     servicio.conceptoServicio + '</a></td><th>' + 
 										     servicio.precioServicio + '</th></tr>'); 
-						});				
+						});
+						$('#tabla-servicios').append('</tbody>');
 					}
 				},100);
 				rellenaRazas(datos.raza);
@@ -400,11 +441,22 @@ function cargaServicio(tipo) {
     } 
 }
 
+
+
+function recargaInicio() {
+	borraID();
+	buscaServicios(0);
+}
+
 function borraServicio(tipo) {
     try {
         $.get('/servicio/destroy/' + localStorage.idServicio, function (respuesta) {
-            borraID();
-            buscaServicios(0);
+            if (!tipo) {
+		borraID();
+		buscaServicios(0);
+	    } else {
+		refrescaTablaServicios();
+	    }
         }).fail(function () {
             mensaje("Servicio eliminado NOK :(");
             console.log('error comm');
