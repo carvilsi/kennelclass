@@ -65,6 +65,8 @@ var fichaGuardada = 'Ficha guardada';
 (function() {
 	hoy = new Date();
 	buscaServicios(0);
+	localStorage.clear();
+	//borraID();
 })();
 
 
@@ -102,7 +104,9 @@ function save() {
 		mensaje('Ficha guardada NOK :(');
 	});
 	resetCam();
-	recargaInicio();	
+	setTimeout(function() {
+		recargaInicio();
+	}, 100);
 }
 
 /**
@@ -162,11 +166,19 @@ function guardaServicio(v) {
             localStorage.clear();
         }
     } else {
-        rest = createServicio +
-            fechaServicio + $('#fecha-servicio' + v).val() + and +
-            horaServicio + $('#input-hora' + v).val() + and +
-            conceptoServicio + $('#textarea-servicio' + v).val() + and +
-            precioServicio + $('#textinput-precio' + v).val();
+        if (v && localStorage.idServicio) {
+		rest = updateServicio + localStorage.idServicio + '?' +
+			fechaServicio + $('#fecha-servicio' + v).val() + and +
+			horaServicio + $('#input-hora' + v).val() + and +
+			conceptoServicio + $('#textarea-servicio' + v).val() + and +
+			precioServicio + $('#textinput-precio' + v).val();
+	} else {
+		rest = createServicio +
+			fechaServicio + $('#fecha-servicio' + v).val() + and +
+			horaServicio + $('#input-hora' + v).val() + and +
+			conceptoServicio + $('#textarea-servicio' + v).val() + and +
+			precioServicio + $('#textinput-precio' + v).val();
+	}
 
         $.post(rest, function (response) {
             $.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
@@ -175,8 +187,10 @@ function guardaServicio(v) {
                 }, 100);
                 if (!v) {
 			buscaServicios(0);
+			localStorage.clear();
 		} else {
 			refrescaTablaServicios();
+			localStorage.removeItem('idServicio');
 		}
             }).fail(function () {
                 mensaje('Servicio no asociado NOK :/');
@@ -302,7 +316,7 @@ $('#ul-servicios').on('click', 'li', function() {
  */
 
 function borraID() {
-    localStorage.clear();
+	localStorage.clear();
 	limpiarLista();
 	resetCam();
 }
@@ -312,7 +326,7 @@ function nuevaFicha() {
 	limpiarLista();
 	setTimeout(function(){
 		rellenaRazas('mestizo');
-	},100);
+	},200);
 }
 /**
  * Carga las fichas cuando tenemos un id
@@ -348,7 +362,7 @@ function cargaFichas() {
 						});
 						$('#tabla-servicios').append('</tbody>');
 					}
-				},100);
+				},200);
 				rellenaRazas(datos.raza);
 			}).fail(function() {
 				console.log('error com.');

@@ -1,14 +1,13 @@
 /**
 * Servicio.js
 *
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
+* @description :: Son los servicios que se le prestan al cliente canino
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
 
 module.exports = {
 
   attributes: {
-//	 id: { primaryKey: true }
   	serv: {model: 'Ficha'},
 	conceptoServicio: { type: 'string'},
 	horaServicio: { type: 'string'},
