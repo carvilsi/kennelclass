@@ -1,10 +1,10 @@
- video_div {
+video_div {
 	 width: 120px;
 	 height: 140px;
 	 background: rgba(255,255,255,0.5);
 	 border: 1px solid #ccc;
 	 margin-left: 120px;
- }
+}
 
 
 .ui-listview .ui-li-has-thumb>img:first-child, .ui-listview .ui-li-has-thumb>.ui-btn>img:first-child, .ui-listview .ui-li-has-thumb .ui-li-thumb {
@@ -20,4 +20,9 @@
 
 .ui-listview>.ui-li-has-thumb>.ui-btn, .ui-listview>.ui-li-static.ui-li-has-thumb {
 	padding-left: 1em;
+}
+
+
+label.ui-btn.ui-corner-all.ui-btn-inherit.ui-radio-off.ui-first-child {
+	margin-left: 4px;
 }

@@ -58,13 +58,18 @@ var and = '&';
 var uriImage = '';
 var cam = false;
 
-var hoy;
+//var hoy = new Date();
+var dia = 0;
 // var daemon = true;
 var fichaGuardada = 'Ficha guardada';
 
+var filtroServicioID = 2;
+
+//var filtro
+
 (function() {
-	hoy = new Date();
-	buscaServicios(0);
+	//hoy = new Date();
+	buscaServicios();
 	localStorage.clear();
 	//borraID();
 })();
@@ -121,7 +126,7 @@ function borraFicha() {
 			$.get(rest, function (res){
 				mensaje('Ficha eliminada OK :)');
 				borraID();
-				buscaServicios(0);				
+				buscaServicios();				
 			}).fail(function (){
 				mensaje('error al intentar eliminar la ficha NOK :/');
 			});
@@ -141,19 +146,20 @@ function borraFicha() {
 
 function guardaServicio(v) {
     var rest;
+    var precio = $('#textinput-precio' + v).val() ? $('#textinput-precio' + v).val() : 0;
     if (localStorage.idServicio && !localStorage.id) {
         try {
             rest = updateServicio + localStorage.idServicio + '?' +
                 fechaServicio + $('#fecha-servicio' + v).val() + and +
                 horaServicio + $('#input-hora' + v).val() + and +
                 conceptoServicio + $('#textarea-servicio' + v).val() + and +
-                precioServicio + $('#textinput-precio' + v).val();
+                precioServicio + precio;
             $.post(rest, function (res) {
                 setTimeout(function () {
                     mensaje('Servicio actualizado OK :)');
                 }, 100);
                 if (!v) {
-			buscaServicios(0);
+			buscaServicios();
 		} else {
 			refrescaTablaServicios();
 		}
@@ -171,13 +177,13 @@ function guardaServicio(v) {
 			fechaServicio + $('#fecha-servicio' + v).val() + and +
 			horaServicio + $('#input-hora' + v).val() + and +
 			conceptoServicio + $('#textarea-servicio' + v).val() + and +
-			precioServicio + $('#textinput-precio' + v).val();
+			precioServicio + precio;
 	} else {
 		rest = createServicio +
 			fechaServicio + $('#fecha-servicio' + v).val() + and +
 			horaServicio + $('#input-hora' + v).val() + and +
 			conceptoServicio + $('#textarea-servicio' + v).val() + and +
-			precioServicio + $('#textinput-precio' + v).val();
+			precioServicio + precio;
 	}
 
         $.post(rest, function (response) {
@@ -186,7 +192,7 @@ function guardaServicio(v) {
                     mensaje('Servicio guardado OK :)');
                 }, 100);
                 if (!v) {
-			buscaServicios(0);
+			buscaServicios();
 			localStorage.clear();
 		} else {
 			refrescaTablaServicios();
@@ -203,7 +209,7 @@ function guardaServicio(v) {
 
 /**
  *Para refrescar la lista de servicios prestados una vez que se edita en
- *la página de Fichas perrucanidas
+ *la página de Fichas perrucánidas
  *No es la mejor práctica que me gustaría aplicar para refrescar, seguiremos investigando.
  */
 
@@ -218,10 +224,11 @@ function refrescaTablaServicios() {
 			var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
 			$('#tabla-servicios').append('<tbody>');
 			datos.serviciosPrestados.forEach(function(servicio){
-			$('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + servicio.fechaServicio + '</td><td>' +
-			     servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' + 
-			     servicio.conceptoServicio + '</a></td><th>' + 
-			     servicio.precioServicio + '</th></tr>'); 
+				var precio = servicio.precioServicio ? servicio.precioServicio : 'SIN COBRAR';
+				$('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + servicio.fechaServicio + '</td><td>' +
+					servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' + 
+					servicio.conceptoServicio + '</a></td><th>' + 
+					precio + '</th></tr>'); 
 			});
 			$('#tabla-servicios').append('</tbody>');
 		}
@@ -259,14 +266,24 @@ function buscaFichas() {
  * con respecto a la fecha actual
  */
 
-function buscaServicios(d) {
-    hoy = d == 0 ? new Date() : addDays(hoy, d);
-     var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
-    $.get('servicio?where={"fechaServicio":"' + avui + '"}&sort=horaServicio%20ASC', function (data) {
+//function buscaServicios(d) {
+function buscaServicios() {
+	//if (d == 0 && hoy.getMonth() == new Date.getMonth() ) {
+	//	code
+	//}
+    	
+    //hoy = d == 0 ? hoy : addDays(hoy, d);
+    var hoy = new Date();
+    hoy = dia == 0 ? hoy : addDays(hoy, dia);
+    var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
+    // ["todos los servicios, cobrados o no", "Los servicios cobrados", "los servicios que faltan por cobrarse"]
+    var filtroServicio = ['"}', '", "precioServicio":{"!":0}}', '", "precioServicio":0}'];
+    $.get('servicio?where={"fechaServicio":"' + avui + filtroServicio[filtroServicioID] + '&sort=horaServicio%20ASC', function (data) {
         $('#ul-servicios').empty();
         data.forEach(function (servicio) {
             if (servicio.serv) {
-                $('#ul-servicios').append('<li id="' + servicio.id + '"><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop"><h1>' + servicio.horaServicio +
+		var color = servicio.precioServicio == 0 ? 'style="color:red"' : '';
+                $('#ul-servicios').append('<li id="' + servicio.id + '"><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop"><h1 ' + color +'>' + servicio.horaServicio +
                     '  :  ' + servicio.conceptoServicio +
                     '</h1><p>Nombre: ' + servicio.serv.nombre + '</p><a servID="' + servicio.serv.id +
                     '" href="/fichas">Ficha</a></li>');
@@ -308,6 +325,37 @@ $('#ul-servicios').on('click', 'li a', function() {
 $('#ul-servicios').on('click', 'li', function() {
 	localStorage.idServicio=$(this).attr('id');
 	cargaServicio('');
+});
+
+/**
+ *Para poder filtrar la búsqueda de los servicios
+ **/
+
+$("input[type='radio']").bind( "change", function(event, ui) {
+	filtroServicioID = $(this).attr('value');
+	buscaServicios();
+});
+
+$("#unDiaMenos").bind("click",function(event, ui) {
+	console.log("un dia menos");
+	dia -= 1;
+	console.log(dia);
+	buscaServicios();
+});
+
+$("#diaHoy").bind("click",function(event, ui) {
+	console.log("el día de hoy");
+	dia = 0;
+	console.log(dia);
+	buscaServicios();
+});
+
+
+$("#unDiaMas").bind("click",function(event, ui) {
+	console.log("un dia más");
+	dia += 1;
+	console.log(dia);
+	buscaServicios();
 });
 
 /**
@@ -355,10 +403,12 @@ function cargaFichas() {
 						$('#div-servicios').css('display','inline');
 						$('#tabla-servicios').append('<tbody>');
 						datos.serviciosPrestados.forEach(function(servicio){
+							var precio = servicio.precioServicio ? servicio.precioServicio : 'SIN COBRAR';
 							$('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + servicio.fechaServicio + '</td><td>' +
 										     servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' + 
 										     servicio.conceptoServicio + '</a></td><th>' + 
-										     servicio.precioServicio + '</th></tr>'); 
+										     precio + '</th></tr>'); 
+										     //servicio.precioServicio + '</th></tr>'); 
 						});
 						$('#tabla-servicios').append('</tbody>');
 					}
@@ -373,7 +423,7 @@ function cargaFichas() {
 }
 
 function tocameFila(esto){
-    localStorage.idServicio=esto.attr('id');
+	localStorage.idServicio=esto.attr('id');
 	cargaServicio('Ficha');
 }
 
@@ -441,7 +491,6 @@ function limpiarLista() {
 }
 
 function cargaServicio(tipo) {
-//    console.log('Si que me llega la cosa: ' + tipo);
     if (localStorage.idServicio) {
         $.get('/servicio?id=' + localStorage.idServicio, function(servicio){
             $('#fecha-servicio' + tipo).val(servicio.fechaServicio);   
@@ -459,7 +508,7 @@ function cargaServicio(tipo) {
 
 function recargaInicio() {
 	borraID();
-	buscaServicios(0);
+	buscaServicios();
 }
 
 function borraServicio(tipo) {
@@ -467,7 +516,7 @@ function borraServicio(tipo) {
         $.get('/servicio/destroy/' + localStorage.idServicio, function (respuesta) {
             if (!tipo) {
 		borraID();
-		buscaServicios(0);
+		buscaServicios();
 	    } else {
 		refrescaTablaServicios();
 	    }

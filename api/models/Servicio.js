@@ -14,7 +14,10 @@ module.exports = {
 	fechaServicio: { type: 'string'},
 	updatedAt: { type: 'string'},
 	createdAt: { type: 'string'},
-	precioServicio: { type: 'integer'}
+	precioServicio: {
+            type: 'integer',
+            required: false
+            }
   }
 };
 
