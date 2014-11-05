@@ -67,7 +67,7 @@ var filtroServicioID = 2;
 
 //var filtro
 
-(function() {
+(function () {
 	//hoy = new Date();
 	buscaServicios();
 	localStorage.clear();
@@ -266,13 +266,7 @@ function buscaFichas() {
  * con respecto a la fecha actual
  */
 
-//function buscaServicios(d) {
 function buscaServicios() {
-	//if (d == 0 && hoy.getMonth() == new Date.getMonth() ) {
-	//	code
-	//}
-    	
-    //hoy = d == 0 ? hoy : addDays(hoy, d);
     var hoy = new Date();
     hoy = dia == 0 ? hoy : addDays(hoy, dia);
     var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
@@ -337,24 +331,18 @@ $("input[type='radio']").bind( "change", function(event, ui) {
 });
 
 $("#unDiaMenos").bind("click",function(event, ui) {
-	console.log("un dia menos");
 	dia -= 1;
-	console.log(dia);
 	buscaServicios();
 });
 
 $("#diaHoy").bind("click",function(event, ui) {
-	console.log("el día de hoy");
 	dia = 0;
-	console.log(dia);
 	buscaServicios();
 });
 
 
 $("#unDiaMas").bind("click",function(event, ui) {
-	console.log("un dia más");
 	dia += 1;
-	console.log(dia);
 	buscaServicios();
 });
 

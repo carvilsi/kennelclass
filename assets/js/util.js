@@ -53,7 +53,7 @@ function mensaje(texto){
  */
 
 function rellenaRazas(razaPerro){
-	$.get('/razas?limit=350',function(razas){
+	$.get('/razas?limit=407',function(razas){
 		razas.forEach(function(raza){
 			var option = '<option value="' + raza.nombre + '">' + raza.nombre  + '</option>';
 			if (razaPerro && razaPerro == raza.nombre) {
