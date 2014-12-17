@@ -47,8 +47,10 @@ module.exports.routes = {
     'get /servicios': {
         view: 'servicios/'
     },
-    'GET /servicio/todos': 'ServicioController.buscaAhora',
-    'GET /servicio/elimina': 'ServicioController.eliminaFicha'
+    'GET /servicio/buscaDia': 'ServicioController.buscaAhora',
+    'GET /servicio/elimina': 'ServicioController.eliminaFicha',
+    'GET /servicio/busca': 'ServicioController.buscaEntre',
+//    'GET /ficha/buscaDatos': 'FichaController.buscaDatosFicha'
 
     /***************************************************************************
      *                                                                          *

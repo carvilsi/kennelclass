@@ -68,10 +68,10 @@ var filtroServicioID = 2;
 //var filtro
 
 (function () {
-	//hoy = new Date();
-	buscaServicios();
-	localStorage.clear();
-	//borraID();
+    //hoy = new Date();
+    buscaServicios();
+    localStorage.clear();
+    //borraID();
 })();
 
 
@@ -81,37 +81,37 @@ var filtroServicioID = 2;
  */
 
 function save() {
-	var rest;
-	if (localStorage.id) {
-		 rest = update + localStorage.id + '?';
-	} else {
-		 rest = create; 
-      	}
-        rest = rest +   propietario + $('#textinput-prop').val() + and +
-            		telefono + $('#textinput-tel').val() + and +
-            		movil + $('#textinput-mov').val() + and +
-            		email + $('#textinput-mail').val() + and +
-            		nombre + $('#textinput-nom').val() + and +
-            		raza + $('#select-razas').val() + and +
-            		color + $('#textinput-color').val() + and +
-            		edad + $('#textinput-edad').val() + and +
-            		caracter + $('#textinput-car').val() + and +
-            		problemasMedicos + $('#textarea-prob').val();
-	if (uriImage) {
-		var ur = uriImage.replace('data:image/jpeg;base64,','');
-		var uri1 = encodeURIComponent(ur);
-		rest += and + imagen + uri1;
-	}
-	$.post(rest, function (resp){
-		uriImage = '';
-		mensaje('Ficha guardada OK :)');
-	}).fail(function (){
-		mensaje('Ficha guardada NOK :(');
-	});
-	resetCam();
-	setTimeout(function() {
-		recargaInicio();
-	}, 100);
+    var rest;
+    if (localStorage.id) {
+        rest = update + localStorage.id + '?';
+    } else {
+        rest = create;
+    }
+    rest = rest + propietario + $('#textinput-prop').val() + and +
+        telefono + $('#textinput-tel').val() + and +
+        movil + $('#textinput-mov').val() + and +
+        email + $('#textinput-mail').val() + and +
+        nombre + $('#textinput-nom').val() + and +
+        raza + $('#select-razas').val() + and +
+        color + $('#textinput-color').val() + and +
+        edad + $('#textinput-edad').val() + and +
+        caracter + $('#textinput-car').val() + and +
+        problemasMedicos + $('#textarea-prob').val();
+    if (uriImage) {
+        var ur = uriImage.replace('data:image/jpeg;base64,', '');
+        var uri1 = encodeURIComponent(ur);
+        rest += and + imagen + uri1;
+    }
+    $.post(rest, function (resp) {
+        uriImage = '';
+        mensaje('Ficha guardada OK :)');
+    }).fail(function () {
+        mensaje('Ficha guardada NOK :(');
+    });
+    resetCam();
+    setTimeout(function () {
+        recargaInicio();
+    }, 100);
 }
 
 /**
@@ -119,29 +119,29 @@ function save() {
  */
 
 function borraFicha() {
-	var rest;
-	if (localStorage.id) {
-		$.get('/servicio/elimina?id=' + localStorage.id, function (res){
-			rest = deleteFicha + localStorage.id;
-			$.get(rest, function (res){
-				mensaje('Ficha eliminada OK :)');
-				borraID();
-				buscaServicios();				
-			}).fail(function (){
-				mensaje('error al intentar eliminar la ficha NOK :/');
-			});
-		}).fail(function (){
-			console.log('error al intantar eliminar servicios asociados a la ficha');
-		});
+    var rest;
+    if (localStorage.id) {
+        $.get('/servicio/elimina?id=' + localStorage.id, function (res) {
+            rest = deleteFicha + localStorage.id;
+            $.get(rest, function (res) {
+                mensaje('Ficha eliminada OK :)');
+                borraID();
+                buscaServicios();
+            }).fail(function () {
+                mensaje('error al intentar eliminar la ficha NOK :/');
+            });
+        }).fail(function () {
+            console.log('error al intantar eliminar servicios asociados a la ficha');
+        });
 
-	}
+    }
 }
 
 /**
- * Guardar un servicio prestado a un perro 
- *  y asociarlo a una ficha 
+ * Guardar un servicio prestado a un perro
+ *  y asociarlo a una ficha
  *  TODO ver por que no puedo usar un solo layout.ejs para toda la aplicación :\
-*/
+ */
 
 
 function guardaServicio(v) {
@@ -159,10 +159,10 @@ function guardaServicio(v) {
                     mensaje('Servicio actualizado OK :)');
                 }, 100);
                 if (!v) {
-			buscaServicios();
-		} else {
-			refrescaTablaServicios();
-		}
+                    buscaServicios();
+                } else {
+                    refrescaTablaServicios();
+                }
             }).fail(function () {
                 console.log('error comm.');
             });
@@ -173,18 +173,18 @@ function guardaServicio(v) {
         }
     } else {
         if (v && localStorage.idServicio) {
-		rest = updateServicio + localStorage.idServicio + '?' +
-			fechaServicio + $('#fecha-servicio' + v).val() + and +
-			horaServicio + $('#input-hora' + v).val() + and +
-			conceptoServicio + $('#textarea-servicio' + v).val() + and +
-			precioServicio + precio;
-	} else {
-		rest = createServicio +
-			fechaServicio + $('#fecha-servicio' + v).val() + and +
-			horaServicio + $('#input-hora' + v).val() + and +
-			conceptoServicio + $('#textarea-servicio' + v).val() + and +
-			precioServicio + precio;
-	}
+            rest = updateServicio + localStorage.idServicio + '?' +
+                fechaServicio + $('#fecha-servicio' + v).val() + and +
+                horaServicio + $('#input-hora' + v).val() + and +
+                conceptoServicio + $('#textarea-servicio' + v).val() + and +
+                precioServicio + precio;
+        } else {
+            rest = createServicio +
+                fechaServicio + $('#fecha-servicio' + v).val() + and +
+                horaServicio + $('#input-hora' + v).val() + and +
+                conceptoServicio + $('#textarea-servicio' + v).val() + and +
+                precioServicio + precio;
+        }
 
         $.post(rest, function (response) {
             $.post('/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
@@ -192,12 +192,12 @@ function guardaServicio(v) {
                     mensaje('Servicio guardado OK :)');
                 }, 100);
                 if (!v) {
-			buscaServicios();
-			localStorage.clear();
-		} else {
-			refrescaTablaServicios();
-			localStorage.removeItem('idServicio');
-		}
+                    buscaServicios();
+                    localStorage.clear();
+                } else {
+                    refrescaTablaServicios();
+                    localStorage.removeItem('idServicio');
+                }
             }).fail(function () {
                 mensaje('Servicio no asociado NOK :/');
             });
@@ -207,58 +207,28 @@ function guardaServicio(v) {
     }
 }
 
-/**
- *Para refrescar la lista de servicios prestados una vez que se edita en
- *la página de Fichas perrucánidas
- *No es la mejor práctica que me gustaría aplicar para refrescar, seguiremos investigando.
- */
-
-function refrescaTablaServicios() {
-	$.get('/ficha?id=' + localStorage.id, function (datos) {
-		if (datos.serviciosPrestados.length != 0) {
-			if ($('#tabla-servicios tbody')) {
-				$('#tabla-servicios tbody').remove();
-			} else {
-				$('#tabla-servicios').css('display','inline');
-			}
-			var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
-			$('#tabla-servicios').append('<tbody>');
-			datos.serviciosPrestados.forEach(function(servicio){
-				var precio = servicio.precioServicio ? servicio.precioServicio : 'SIN COBRAR';
-				$('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + servicio.fechaServicio + '</td><td>' +
-					servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' + 
-					servicio.conceptoServicio + '</a></td><th>' + 
-					precio + '</th></tr>'); 
-			});
-			$('#tabla-servicios').append('</tbody>');
-		}
-	}).fail(function(){
-		console.log('err comm. :()');
-	});
-}
-
 
 /**
  * Para la cosa de la búsqueda de las fichas
  */
 
 function buscaFichas() {
-	var busca = $('#busqueda-fichas').val();
-	$.get('/ficha?where={"nombre":{"contains":"' + busca +'"}}&limit=50',function (data) {
-		$('#ul-fichas').empty();
-		data.forEach(function(ficha){	   
-	       	        var imagen = ficha.imagen ? '<img src="data:image/jpeg;base64,' +  ficha.imagen + '"/>' : ''; 
-			$('#ul-fichas').append('<li id=' + ficha.id  +'><a href="/fichas" style="padding-right: 80px;">' + imagen +
-					       '<h1>Nombre: <strong>' + ficha.nombre +
-                           '</strong></h1><p>Dueño: <strong>' + ficha.propietario  +
-					       '</strong></h1><p>Raza: <strong>' + ficha.raza  +
-					       '</strong></p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
-		$('#ul-fichas').listview('refresh');
-		});
-	       window.scrollTo(0, document.body.scrollHeight);
-	}).fail(function() {
-			console.log('error com.');
-		});
+    var busca = $('#busqueda-fichas').val();
+    $.get('/ficha?where={"nombre":{"contains":"' + busca + '"}}&limit=50', function (data) {
+        $('#ul-fichas').empty();
+        data.forEach(function (ficha) {
+            var imagen = ficha.imagen ? '<img src="data:image/jpeg;base64,' + ficha.imagen + '"/>' : '';
+            $('#ul-fichas').append('<li id=' + ficha.id + '><a href="/fichas" style="padding-right: 80px;">' + imagen +
+                '<h1>Nombre: <strong>' + ficha.nombre +
+                '</strong></h1><p>Dueño: <strong>' + ficha.propietario +
+                '</strong></h1><p>Raza: <strong>' + ficha.raza +
+                '</strong></p></a><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop">Dar cita</a></li>');
+            $('#ul-fichas').listview('refresh');
+        });
+        window.scrollTo(0, document.body.scrollHeight);
+    }).fail(function () {
+        console.log('error com.');
+    });
 }
 
 /**
@@ -270,20 +240,15 @@ function buscaServicios() {
     var hoy = new Date();
     hoy = dia == 0 ? hoy : addDays(hoy, dia);
     var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
-    // ["todos los servicios, cobrados o no", "Los servicios cobrados", "los servicios que faltan por cobrarse"]
-    var filtroServicio = ['"}', '", "precioServicio":{"!":0}}', '", "precioServicio":0}'];
-    $.get('servicio?where={"fechaServicio":"' + avui + filtroServicio[filtroServicioID] + '&sort=horaServicio%20ASC', function (data) {
+    $.get('/servicio/buscaDia?fecha=' + avui + '&filtro=' + filtroServicioID, function (data) {
         $('#ul-servicios').empty();
         data.forEach(function (servicio) {
-            if (servicio.serv) {
-		var color = servicio.precioServicio == 0 ? 'style="color:red"' : '';
-                $('#ul-servicios').append('<li id="' + servicio.id + '"><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop"><h1 ' + color +'>' + servicio.horaServicio +
-                    '  :  ' + servicio.conceptoServicio +
-                    '</h1><p>Nombre: ' + servicio.serv.nombre + '</p><a servID="' + servicio.serv.id +
-                    '" href="/fichas">Ficha</a></li>');
-                $('#ul-servicios').listview('refresh');
-            }
-
+            var color = servicio.precioServicio == 0 ? 'style="color:red"' : '';
+            $('#ul-servicios').append('<li id="' + servicio.id + '"><a href="#cita" data-rel="popup" data-position-to="window"  data-transition="pop"><h1 ' + color + '>' + servicio.horaServicio +
+                '  :  ' + servicio.conceptoServicio +
+                '</h1><p>Nombre: ' + servicio.serv.nombre + '</p><a servID="' + servicio.serv.id +
+                '" href="/fichas">Ficha</a></li>');
+            $('#ul-servicios').listview('refresh');
         });
         $('#cabecera-citas').text(avui);
     }).fail(function () {
@@ -291,13 +256,14 @@ function buscaServicios() {
     });
 }
 
+
 /**
  * para quedarme con la cosa del id de la ficha que estoy trabajando
  */
 
-$('#ul-fichas').on('click', 'li', function() {
-	localStorage.id=$(this).attr('id');
-	cargaFichas();
+$('#ul-fichas').on('click', 'li', function () {
+    localStorage.id = $(this).attr('id');
+    cargaFichas();
 });
 
 /**
@@ -305,10 +271,10 @@ $('#ul-fichas').on('click', 'li', function() {
  */
 
 
-$('#ul-servicios').on('click', 'li a', function() {
-	if ($(this).attr('servID')) {
-        localStorage.id=$(this).attr('servID');
-	cargaFichas();
+$('#ul-servicios').on('click', 'li a', function () {
+    if ($(this).attr('servID')) {
+        localStorage.id = $(this).attr('servID');
+        cargaFichas();
     }
 });
 
@@ -316,34 +282,34 @@ $('#ul-servicios').on('click', 'li a', function() {
  * para quedarme con la cosa del id del servicio que estoy trabajando
  */
 
-$('#ul-servicios').on('click', 'li', function() {
-	localStorage.idServicio=$(this).attr('id');
-	cargaServicio('');
+$('#ul-servicios').on('click', 'li', function () {
+    localStorage.idServicio = $(this).attr('id');
+    cargaServicio('');
 });
 
 /**
  *Para poder filtrar la búsqueda de los servicios
  **/
 
-$("input[type='radio']").bind( "change", function(event, ui) {
-	filtroServicioID = $(this).attr('value');
-	buscaServicios();
+$("input[type='radio']").bind("change", function (event, ui) {
+    filtroServicioID = $(this).attr('value');
+    buscaServicios();
 });
 
-$("#unDiaMenos").bind("click",function(event, ui) {
-	dia -= 1;
-	buscaServicios();
+$("#unDiaMenos").bind("click", function (event, ui) {
+    dia -= 1;
+    buscaServicios();
 });
 
-$("#diaHoy").bind("click",function(event, ui) {
-	dia = 0;
-	buscaServicios();
+$("#diaHoy").bind("click", function (event, ui) {
+    dia = 0;
+    buscaServicios();
 });
 
 
-$("#unDiaMas").bind("click",function(event, ui) {
-	dia += 1;
-	buscaServicios();
+$("#unDiaMas").bind("click", function (event, ui) {
+    dia += 1;
+    buscaServicios();
 });
 
 /**
@@ -352,99 +318,130 @@ $("#unDiaMas").bind("click",function(event, ui) {
  */
 
 function borraID() {
-	localStorage.clear();
-	limpiarLista();
-	resetCam();
+    localStorage.clear();
+    limpiarLista();
+    resetCam();
 }
 
 function nuevaFicha() {
     localStorage.clear();
-	limpiarLista();
-	setTimeout(function(){
-		rellenaRazas('mestizo');
-	},200);
+    limpiarLista();
+    setTimeout(function () {
+        rellenaRazas('mestizo');
+    }, 200);
 }
 /**
  * Carga las fichas cuando tenemos un id
  */
- 
- 
+
+
 function cargaFichas() {
-	if (localStorage.id) {
-		var url = document.location.href;
-		$.get('/ficha?id=' + localStorage.id, function (datos) {
-				setTimeout(function(){	
-					$('#textinput-prop').val(datos.propietario);
-					$('#textinput-tel').val(datos.telefono);
-					$('#textinput-mov').val(datos.movil);
-					$('#textinput-mail').val(datos.email);
-					$('#textinput-nom').val(datos.nombre);
-					$('#textinput-color').val(datos.color);
-					$('#textinput-edad').val(datos.edad);
-					$('#textinput-car').val(datos.caracter);
-					$('#textarea-prob').val(datos.problemasMedicos);
-					if (datos.imagen) {
-						$('#retrato').append('<img src="data:image/jpeg;base64,' + datos.imagen + '"/>');
-					}
-					if (datos.serviciosPrestados.length != 0) {
-						var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
-						$('#div-servicios').css('display','inline');
-						$('#tabla-servicios').append('<tbody>');
-						datos.serviciosPrestados.forEach(function(servicio){
-							var precio = servicio.precioServicio ? servicio.precioServicio : 'SIN COBRAR';
-							$('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + servicio.fechaServicio + '</td><td>' +
-										     servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' + 
-										     servicio.conceptoServicio + '</a></td><th>' + 
-										     precio + '</th></tr>'); 
-										     //servicio.precioServicio + '</th></tr>'); 
-						});
-						$('#tabla-servicios').append('</tbody>');
-					}
-				},200);
-				rellenaRazas(datos.raza);
-			}).fail(function() {
-				console.log('error com.');
-			});
-		} else {
-			console.log('Error en localStorage :/');
-		}
+    if (localStorage.id) {
+        var url = document.location.href;
+        $.get('/ficha?id=' + localStorage.id, function (datos) {
+            setTimeout(function () {
+                $('#textinput-prop').val(datos.propietario);
+                $('#textinput-tel').val(datos.telefono);
+                $('#textinput-mov').val(datos.movil);
+                $('#textinput-mail').val(datos.email);
+                $('#textinput-nom').val(datos.nombre);
+                $('#textinput-color').val(datos.color);
+                $('#textinput-edad').val(datos.edad);
+                $('#textinput-car').val(datos.caracter);
+                $('#textarea-prob').val(datos.problemasMedicos);
+                if (datos.imagen) {
+                    $('#retrato').append('<img src="data:image/jpeg;base64,' + datos.imagen + '"/>');
+                }
+                if (datos.serviciosPrestados.length != 0) {
+                    var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
+                    $('#div-servicios').css('display', 'inline');
+                    $('#tabla-servicios').append('<tbody>');
+                    datos.serviciosPrestados.forEach(function (servicio) {
+                        var fecha = new Date(servicio.fechaServicio);
+                        var precio = servicio.precioServicio ? servicio.precioServicio : 'SIN COBRAR';
+                        $('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + fecha.getFullYear() + '-' + ("0" + (fecha.getMonth() + 1)).slice(-2) + '-' + ("0" + fecha.getDate()).slice(-2) + '</td><td>' +
+                            servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' +
+                            servicio.conceptoServicio + '</a></td><th>' +
+                            precio + '</th></tr>');
+                    });
+                    $('#tabla-servicios').append('</tbody>');
+                }
+            }, 200);
+            rellenaRazas(datos.raza);
+        }).fail(function () {
+            console.log('error com.');
+        });
+    } else {
+        console.log('Error en localStorage :/');
+    }
 }
 
-function tocameFila(esto){
-	localStorage.idServicio=esto.attr('id');
-	cargaServicio('Ficha');
+/**
+ *Para refrescar la lista de servicios prestados una vez que se edita en
+ *la página de Fichas perrucánidas
+ *No es la mejor práctica que me gustaría aplicar para refrescar, seguiremos investigando.
+ */
+
+function refrescaTablaServicios() {
+    $.get('/ficha?id=' + localStorage.id, function (datos) {
+        if (datos.serviciosPrestados.length != 0) {
+            if ($('#tabla-servicios tbody')) {
+                $('#tabla-servicios tbody').remove();
+            } else {
+                $('#tabla-servicios').css('display', 'inline');
+            }
+            var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
+            $('#tabla-servicios').append('<tbody>');
+            datos.serviciosPrestados.forEach(function (servicio) {
+                var fecha = new Date(servicio.fechaServicio);
+                var precio = servicio.precioServicio ? servicio.precioServicio : 'SIN COBRAR';
+                $('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + fecha.getFullYear() + '-' + ("0" + (fecha.getMonth() + 1)).slice(-2) + '-' + ("0" + fecha.getDate()).slice(-2) + '</td><td>' +
+                    //				$('#tabla-servicios').append('<tr onclick="tocameFila($(this));" id="' + servicio.id + '"><td>' + servicio.fechaServicio + '</td><td>' +
+                    servicio.horaServicio + '</td><td><a href="#citaFicha" data-rel="popup" data-position-to="window" data-transition="pop">' +
+                    servicio.conceptoServicio + '</a></td><th>' +
+                    precio + '</th></tr>');
+            });
+            $('#tabla-servicios').append('</tbody>');
+        }
+    }).fail(function () {
+        console.log('err comm. :()');
+    });
+}
+
+function tocameFila(esto) {
+    localStorage.idServicio = esto.attr('id');
+    cargaServicio('Ficha');
 }
 
 /**
  * inicia la cosa de la foto…
- * TODO: mirar a ver de hacerlo cuando se inicia, de esta manera no se crean falsas esperanzas para los exploradores que no lo soportan y nos 
+ * TODO: mirar a ver de hacerlo cuando se inicia, de esta manera no se crean falsas esperanzas para los exploradores que no lo soportan y nos
  * ahorramos un click
  */
 
 function foto() {
-	try{
-		Webcam.set({
-			width: 150,
-			height: 150,
-			dest_width: 150,
-			dest_height: 130,
-			image_format: 'jpeg',
-			jpeg_quality: 90,
-			force_flash: false
-		    });
+    try {
+        Webcam.set({
+            width: 150,
+            height: 150,
+            dest_width: 150,
+            dest_height: 130,
+            image_format: 'jpeg',
+            jpeg_quality: 90,
+            force_flash: false
+        });
         if (Webcam.cameraIDs.length > 1) {
             Webcam.cameraID = 1;
         }
-		Webcam.attach('#camara');	
-		} 
-	catch (err) {
-		console.log('Algún problema con la cámara ' +  err.message);
-	}
-	$('#foto').css('display','none');
-	$('#hacerFoto').css('display','inline');
-	Webcam.on( 'live', function() {
-		cam = true;	      
-	} );
+        Webcam.attach('#camara');
+    } catch (err) {
+        console.log('Algún problema con la cámara ' + err.message);
+    }
+    $('#foto').css('display', 'none');
+    $('#hacerFoto').css('display', 'inline');
+    Webcam.on('live', function () {
+        cam = true;
+    });
 }
 
 /**
@@ -452,11 +449,11 @@ function foto() {
  */
 
 function hacerFoto() {
-	Webcam.snap( function(data_uri) {
-		uriImage = data_uri;
-		$('img').remove();
-		$('#retrato').append('<img src="'+data_uri+'"/>');
-	});
+    Webcam.snap(function (data_uri) {
+        uriImage = data_uri;
+        $('img').remove();
+        $('#retrato').append('<img src="' + data_uri + '"/>');
+    });
 }
 
 /**
@@ -465,49 +462,50 @@ function hacerFoto() {
 
 
 function resetCam() {
-	if (Webcam && cam)  {
-		Webcam.reset();
-		cam = false;
-	}
+    if (Webcam && cam) {
+        Webcam.reset();
+        cam = false;
+    }
 }
 
 /**
  * Limpia la lista de fichas en la página principal
  */
 function limpiarLista() {
-	$('#ul-fichas').empty().listview("refresh");
+    $('#ul-fichas').empty().listview("refresh");
 }
 
 function cargaServicio(tipo) {
     if (localStorage.idServicio) {
-        $.get('/servicio?id=' + localStorage.idServicio, function(servicio){
-            $('#fecha-servicio' + tipo).val(servicio.fechaServicio);   
+        $.get('/servicio?id=' + localStorage.idServicio, function (servicio) {
+            var fecha = new Date(servicio.fechaServicio);
+            $('#fecha-servicio' + tipo).val(fecha.getFullYear() + '-' + ("0" + (fecha.getMonth() + 1)).slice(-2) + '-' + ("0" + fecha.getDate()).slice(-2));
             $('#input-hora' + tipo).val(servicio.horaServicio);
             $('#textarea-servicio' + tipo).val(servicio.conceptoServicio);
             $('#textinput-precio' + tipo).val(servicio.precioServicio);
-            $('#botonBorrarServicio' + tipo).css('display','inline');
-        }).fail(function (){
+            $('#botonBorrarServicio' + tipo).css('display', 'inline');
+        }).fail(function () {
             console.log('error comm');
         });
-    } 
+    }
 }
 
 
 
 function recargaInicio() {
-	borraID();
-	buscaServicios();
+    borraID();
+    buscaServicios();
 }
 
 function borraServicio(tipo) {
     try {
         $.get('/servicio/destroy/' + localStorage.idServicio, function (respuesta) {
             if (!tipo) {
-		borraID();
-		buscaServicios();
-	    } else {
-		refrescaTablaServicios();
-	    }
+                borraID();
+                buscaServicios();
+            } else {
+                refrescaTablaServicios();
+            }
         }).fail(function () {
             mensaje("Servicio eliminado NOK :(");
             console.log('error comm');

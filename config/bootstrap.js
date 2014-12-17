@@ -419,9 +419,29 @@ module.exports.bootstrap = function(cb) {
 					{nombre: "Whippet"},
 					{nombre: "Yorkshire terrier"}       
 	 ];
-	Razas.count().exec(function(err, count) {
-		if (err) return cb(err);
-		if (count > 0) return cb();
-		Razas.create(razas).exec(cb);
-	});
+	Razas.count().exec(function (err, count) {
+    if (err) return cb(err);
+    if (count > 0) return cb();
+    Razas.create(razas).exec(cb);
+});
+    Servicio.find({
+        fechaServicio: { $type: 2 }
+    }).exec(function (err, servicios) {
+            console.log(servicios.length > 0 ? 'Entradas a modificar: ' + servicios.length : '');
+        for (var i = 0; i < servicios.length; i++) {
+            var servicio = servicios[i];
+            servicio.fechaServicio = new Date(servicio.fechaServicio);
+                Servicio.update({
+                    id: servicio.id
+                }, {
+                    fechaServicio: servicio.fechaServicio
+                }).exec(function (err, resp) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('done ' + i);
+                    }
+                });
+        }
+        });
 };
