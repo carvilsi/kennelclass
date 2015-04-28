@@ -28,6 +28,7 @@ Después clona kennelclass e instala los paquetes que faltan:
 $ git clone https://github.com/carvilsi/kennelclass.git
 $ cd kennelclass
 $ sudo npm install
+$ sudo npm install sails-mongo
 ```
 
 Para ejecutar:
