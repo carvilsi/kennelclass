@@ -54,7 +54,7 @@ function mensaje(texto){
 
 
 function rellenaRazas(razaPerro){
-	$.get('http://' + ip + ':' + port + '/razas?limit=407',function(razas){
+	$.get(prot + ip + colon + port + '/razas?limit=407',function(razas){
 		razas.forEach(function(raza){
 			$('select#select-razas').selectmenu();
 			var option = '<option value="' + raza.nombre + '">' + raza.nombre  + '</option>';

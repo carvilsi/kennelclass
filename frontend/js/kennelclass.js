@@ -72,6 +72,10 @@ var ip='localhost';
 
 var port=1337;
 
+var prot = 'http://';
+
+var colon = ':';
+
 (function () {
 
     // console.log(window.location.pathname);
@@ -103,9 +107,9 @@ var port=1337;
 function save() {
     var rest;
     if (localStorage.id) {
-        rest = update + localStorage.id + '?';
+        rest = prot + ip + colon + port +  update + localStorage.id + '?';
     } else {
-        rest = create;
+        rest = prot + ip + colon + port + create;
     }
     rest = rest + propietario + $('#textinput-prop').val() + and +
         telefono + $('#textinput-tel').val() + and +
@@ -141,8 +145,8 @@ function save() {
 function borraFicha() {
     var rest;
     if (localStorage.id) {
-        $.get('http://' + ip + ':' + port + '/servicio/elimina?id=' + localStorage.id, function (res) {
-            rest = deleteFicha + localStorage.id;
+        $.get(prot + ip + colon + port + '/servicio/elimina?id=' + localStorage.id, function (res) {
+            rest = prot + ip + colon + port + deleteFicha + localStorage.id;
             $.get(rest, function (res) {
                 mensaje('Ficha eliminada OK :)');
                 borraID();
@@ -169,7 +173,7 @@ function guardaServicio(v) {
     var precio = $('#textinput-precio' + v).val() ? $('#textinput-precio' + v).val() : 0;
     if (localStorage.idServicio && !localStorage.id) {
         try {
-            rest = updateServicio + localStorage.idServicio + '?' +
+            rest = prot + ip + colon + port + updateServicio + localStorage.idServicio + '?' +
                 fechaServicio + $('#fecha-servicio' + v).val() + and +
                 horaServicio + $('#input-hora' + v).val() + and +
                 conceptoServicio + $('#textarea-servicio' + v).val() + and +
@@ -193,13 +197,13 @@ function guardaServicio(v) {
         }
     } else {
         if (v && localStorage.idServicio) {
-            rest = updateServicio + localStorage.idServicio + '?' +
+            rest = prot + ip + colon + port +  updateServicio + localStorage.idServicio + '?' +
                 fechaServicio + $('#fecha-servicio' + v).val() + and +
                 horaServicio + $('#input-hora' + v).val() + and +
                 conceptoServicio + $('#textarea-servicio' + v).val() + and +
                 precioServicio + precio;
         } else {
-            rest = createServicio +
+            rest = prot + ip + colon + port +  createServicio +
                 fechaServicio + $('#fecha-servicio' + v).val() + and +
                 horaServicio + $('#input-hora' + v).val() + and +
                 conceptoServicio + $('#textarea-servicio' + v).val() + and +
@@ -261,7 +265,7 @@ function buscaServicios() {
     var hoy = new Date();
     hoy = dia == 0 ? hoy : addDays(hoy, dia);
     var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
-    $.get('http://' + ip + ':' + port + '/servicio/buscaDia?fecha=' + avui + '&filtro=' + filtroServicioID, function (data) {
+    $.get(prot + ip + colon + port + '/servicio/buscaDia?fecha=' + avui + '&filtro=' + filtroServicioID, function (data) {
         $('#ul-servicios').empty();
         data.forEach(function (servicio) {
             var color = servicio.precioServicio == 0 ? 'style="color:red"' : '';
@@ -362,7 +366,7 @@ function nuevaFicha() {
 function cargaFichas() {
     if (localStorage.id) {
         var url = document.location.href;
-        $.get('http://' + ip + ':' + port + '/ficha?id=' + localStorage.id, function (datos) {
+        $.get(prot + ip + colon + port + '/ficha?id=' + localStorage.id, function (datos) {
           console.log(datos);
             setTimeout(function () {
                 $('#textinput-prop').val(datos.propietario);
@@ -408,7 +412,7 @@ function cargaFichas() {
  */
 
 function refrescaTablaServicios() {
-    $.get('http://' + ip + ':' + port + '/ficha?id=' + localStorage.id, function (datos) {
+    $.get(prot + ip + colon + port + '/ficha?id=' + localStorage.id, function (datos) {
         if (datos.serviciosPrestados.length != 0) {
             if ($('#tabla-servicios tbody')) {
                 $('#tabla-servicios tbody').remove();
@@ -501,7 +505,7 @@ function limpiarLista() {
 
 function cargaServicio(tipo) {
     if (localStorage.idServicio) {
-        $.get('http://' + ip + ':' + port + '/servicio?id=' + localStorage.idServicio, function (servicio) {
+        $.get(prot + ip + colon + port + '/servicio?id=' + localStorage.idServicio, function (servicio) {
             var fecha = new Date(servicio.fechaServicio);
             $('#fecha-servicio' + tipo).val(fecha.getFullYear() + '-' + ("0" + (fecha.getMonth() + 1)).slice(-2) + '-' + ("0" + fecha.getDate()).slice(-2));
             $('#input-hora' + tipo).val(servicio.horaServicio);
@@ -523,7 +527,7 @@ function recargaInicio() {
 
 function borraServicio(tipo) {
     try {
-        $.get('http://' + ip + ':' + port + '/servicio/destroy/' + localStorage.idServicio, function (respuesta) {
+        $.get(prot + ip + colon + port + '/servicio/destroy/' + localStorage.idServicio, function (respuesta) {
             if (!tipo) {
                 borraID();
                 buscaServicios();
