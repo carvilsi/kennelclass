@@ -95,29 +95,8 @@ function save() {
     var rest;
     if (localStorage.id) {
         rest = prot + ip + colon + port +  update + localStorage.id + '?';
-        // rest = rest + propietario + $('#textinput-prop').val() + and +
-        //     telefono + $('#textinput-tel').val() + and +
-        //     movil + $('#textinput-mov').val() + and +
-        //     email + $('#textinput-mail').val() + and +
-        //     nombre + $('#textinput-nom').val() + and +
-        //     raza + $('#select-razas').val() + and +
-        //     color + $('#textinput-color').val() + and +
-        //     edad + $('#textinput-edad').val() + and +
-        //     caracter + $('#textinput-car').val() + and +
-        //     problemasMedicos + $('#textarea-prob').val();
     } else {
-      // TODO: refactorizar para no tener repetido el código
         rest = prot + ip + colon + port + create;
-        // rest = rest + propietario + $('#textinput-propN').val() + and +
-        //     telefono + $('#textinput-telN').val() + and +
-        //     movil + $('#textinput-movN').val() + and +
-        //     email + $('#textinput-mailN').val() + and +
-        //     nombre + $('#textinput-nomN').val() + and +
-        //     raza + $('#select-razasN').val() + and +
-        //     color + $('#textinput-colorN').val() + and +
-        //     edad + $('#textinput-edadN').val() + and +
-        //     caracter + $('#textinput-carN').val() + and +
-        //     problemasMedicos + $('#textarea-probN').val();
     }
 
     rest = rest + propietario + $('#textinput-prop').val() + and +
@@ -135,7 +114,6 @@ function save() {
         var uri1 = encodeURIComponent(ur);
         rest += and + imagen + uri1;
     }
-    // console.log('VEamos la llamada ' + rest);
     $.post(rest, function (resp) {
         uriImage = '';
         mensaje('Ficha guardada OK :)');
@@ -174,7 +152,7 @@ function borraFicha() {
 /**
  * Guardar un servicio prestado a un perro
  *  y asociarlo a una ficha
- *  TODO ver por que no puedo usar un solo layout.ejs para toda la aplicación :\
+ *
  */
 
 
@@ -249,7 +227,6 @@ function guardaServicio(v) {
 function buscaFichas() {
     var busca = $('#busqueda-fichas').val();
     $.get('http://' + ip + ':' + port + '/ficha?where={"nombre":{"contains":"' + busca + '"}}&limit=50', function (data) {
-        // console.log(data);
         $('#ul-fichas').listview().empty();
         data.forEach(function (ficha) {
             var imagen = ficha.imagen ? '<img src="data:image/jpeg;base64,' + ficha.imagen + '"/>' : '';
@@ -313,13 +290,6 @@ $(document).on('click','#ul-servicios li a', function(event){
   }
 });
 
-//
-// $('#ul-servicios').on('click', 'li a', function () {
-//     if ($(this).attr('servID')) {
-//         localStorage.id = $(this).attr('servID');
-//         cargaFichas();
-//     }
-// });
 
 /**
  * para quedarme con la cosa del id del servicio que estoy trabajando
@@ -330,11 +300,6 @@ $(document).on('click', '#ul-servicios li', function(){
   cargaServicio('');
 });
 
-//
-// $('#ul-servicios').on('click', 'li', function () {
-//     localStorage.idServicio = $(this).attr('id');
-//     cargaServicio('');
-// });
 
 /**
  *Para poder filtrar la búsqueda de los servicios
@@ -346,10 +311,6 @@ $(document).on('change', "input[type='radio']", function(event, ui){
   buscaServicios();
 });
 
-// $("input[type='radio']").bind("change", function (event, ui) {
-//     filtroServicioID = $(this).attr('value');
-//     buscaServicios();
-// });
 
 /**
  * Para buscar servicios un día menos
@@ -377,33 +338,6 @@ $(document).on('click', '#unDiaMas', function(){
   dia += 1;
   buscaServicios();
 });
-
-// $("#unDiaMenos").on("click", function () {
-//   console.log('aaaaaaaaaa');
-//     dia -= 1;
-//     buscaServicios();
-// });
-
-// $("#diaHoy").on("click",'a', function (event, ui) {
-//     dia = 0;
-//     buscaServicios();
-// });
-//
-// $("#unDiaMenos").bind("click", function (event, ui) {
-//     dia -= 1;
-//     buscaServicios();
-// });
-//
-// $("#diaHoy").bind("click", function (event, ui) {
-//     dia = 0;
-//     buscaServicios();
-// });
-
-
-// $("#unDiaMas").bind("click", function (event, ui) {
-//     dia += 1;
-//     buscaServicios();
-// });
 
 /**
  * para borrar el ID esto es cuando quiero crear una nueva ficha
