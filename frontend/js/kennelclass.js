@@ -78,22 +78,9 @@ var colon = ':';
 
 (function () {
 
-    // console.log(window.location.pathname);
-    // console.log(window.location);
-    // console.log(window.location.pathname);
-    // console.log(window.location.href);
-    // console.log(window.location.origin);
 
-    // if(window.location.pathname.localeCompare("/") == 0){
-    // } else {
-    //     buscaServicios();
-    //     window.location.replace("/");
-    // }
-    //
-    // if(window.location.pathname.localeCompare("/auth/login") == 0){
-    //     window.location.replace("/");
-    // }
 
+    buscaServicios();
     localStorage.clear();
 
 })();
@@ -108,24 +95,47 @@ function save() {
     var rest;
     if (localStorage.id) {
         rest = prot + ip + colon + port +  update + localStorage.id + '?';
+        rest = rest + propietario + $('#textinput-prop').val() + and +
+            telefono + $('#textinput-tel').val() + and +
+            movil + $('#textinput-mov').val() + and +
+            email + $('#textinput-mail').val() + and +
+            nombre + $('#textinput-nom').val() + and +
+            raza + $('#select-razas').val() + and +
+            color + $('#textinput-color').val() + and +
+            edad + $('#textinput-edad').val() + and +
+            caracter + $('#textinput-car').val() + and +
+            problemasMedicos + $('#textarea-prob').val();
     } else {
+      // TODO: refactorizar para no tener repetido el código
         rest = prot + ip + colon + port + create;
+        rest = rest + propietario + $('#textinput-propN').val() + and +
+            telefono + $('#textinput-telN').val() + and +
+            movil + $('#textinput-movN').val() + and +
+            email + $('#textinput-mailN').val() + and +
+            nombre + $('#textinput-nomN').val() + and +
+            raza + $('#select-razasN').val() + and +
+            color + $('#textinput-colorN').val() + and +
+            edad + $('#textinput-edadN').val() + and +
+            caracter + $('#textinput-carN').val() + and +
+            problemasMedicos + $('#textarea-probN').val();
     }
-    rest = rest + propietario + $('#textinput-prop').val() + and +
-        telefono + $('#textinput-tel').val() + and +
-        movil + $('#textinput-mov').val() + and +
-        email + $('#textinput-mail').val() + and +
-        nombre + $('#textinput-nom').val() + and +
-        raza + $('#select-razas').val() + and +
-        color + $('#textinput-color').val() + and +
-        edad + $('#textinput-edad').val() + and +
-        caracter + $('#textinput-car').val() + and +
-        problemasMedicos + $('#textarea-prob').val();
+
+    // rest = rest + propietario + $('#textinput-prop').val() + and +
+    //     telefono + $('#textinput-tel').val() + and +
+    //     movil + $('#textinput-mov').val() + and +
+    //     email + $('#textinput-mail').val() + and +
+    //     nombre + $('#textinput-nom').val() + and +
+    //     raza + $('#select-razas').val() + and +
+    //     color + $('#textinput-color').val() + and +
+    //     edad + $('#textinput-edad').val() + and +
+    //     caracter + $('#textinput-car').val() + and +
+    //     problemasMedicos + $('#textarea-prob').val();
     if (uriImage) {
         var ur = uriImage.replace('data:image/jpeg;base64,', '');
         var uri1 = encodeURIComponent(ur);
         rest += and + imagen + uri1;
     }
+    // console.log('VEamos la llamada ' + rest);
     $.post(rest, function (resp) {
         uriImage = '';
         mensaje('Ficha guardada OK :)');
@@ -296,47 +306,104 @@ $(document).on('click','#ul-fichas li',function(event){
  * para quedarme con la cosa del id de la ficha asociada al servicio que estoy trabajando
  */
 
-
-$('#ul-servicios').on('click', 'li a', function () {
-    if ($(this).attr('servID')) {
-        localStorage.id = $(this).attr('servID');
-        cargaFichas();
-    }
+$(document).on('click','#ul-servicios li a', function(event){
+  if ($(this).attr('servID')) {
+      localStorage.id = $(this).attr('servID');
+      cargaFichas();
+  }
 });
+
+//
+// $('#ul-servicios').on('click', 'li a', function () {
+//     if ($(this).attr('servID')) {
+//         localStorage.id = $(this).attr('servID');
+//         cargaFichas();
+//     }
+// });
 
 /**
  * para quedarme con la cosa del id del servicio que estoy trabajando
  */
 
-$('#ul-servicios').on('click', 'li', function () {
-    localStorage.idServicio = $(this).attr('id');
-    cargaServicio('');
+$(document).on('click', '#ul-servicios li', function(){
+  localStorage.idServicio = $(this).attr('id');
+  cargaServicio('');
 });
+
+//
+// $('#ul-servicios').on('click', 'li', function () {
+//     localStorage.idServicio = $(this).attr('id');
+//     cargaServicio('');
+// });
 
 /**
  *Para poder filtrar la búsqueda de los servicios
  **/
 
-$("input[type='radio']").bind("change", function (event, ui) {
-    filtroServicioID = $(this).attr('value');
-    buscaServicios();
+
+$(document).on('change', "input[type='radio']", function(event, ui){
+  filtroServicioID = $(this).attr('value');
+  buscaServicios();
 });
 
-$("#unDiaMenos").bind("click", function (event, ui) {
+// $("input[type='radio']").bind("change", function (event, ui) {
+//     filtroServicioID = $(this).attr('value');
+//     buscaServicios();
+// });
+
+/**
+ * Para buscar servicios un día menos
+ */
+
+$(document).on('click', '#unDiaMenos', function(){
     dia -= 1;
     buscaServicios();
 });
 
-$("#diaHoy").bind("click", function (event, ui) {
+/**
+ * Para buscar servicios en el día de hoy
+ */
+
+$(document).on('click', '#diaHoy', function(){
     dia = 0;
     buscaServicios();
 });
 
+/**
+ * Para buscar servicios un día más
+ */
 
-$("#unDiaMas").bind("click", function (event, ui) {
-    dia += 1;
-    buscaServicios();
+$(document).on('click', '#unDiaMas', function(){
+  dia += 1;
+  buscaServicios();
 });
+
+// $("#unDiaMenos").on("click", function () {
+//   console.log('aaaaaaaaaa');
+//     dia -= 1;
+//     buscaServicios();
+// });
+
+// $("#diaHoy").on("click",'a', function (event, ui) {
+//     dia = 0;
+//     buscaServicios();
+// });
+//
+// $("#unDiaMenos").bind("click", function (event, ui) {
+//     dia -= 1;
+//     buscaServicios();
+// });
+//
+// $("#diaHoy").bind("click", function (event, ui) {
+//     dia = 0;
+//     buscaServicios();
+// });
+
+
+// $("#unDiaMas").bind("click", function (event, ui) {
+//     dia += 1;
+//     buscaServicios();
+// });
 
 /**
  * para borrar el ID esto es cuando quiero crear una nueva ficha
@@ -353,7 +420,7 @@ function nuevaFicha() {
     localStorage.clear();
     limpiarLista();
     setTimeout(function () {
-        rellenaRazas('mestizo');
+        rellenaRazasN('mestizo');
     }, 200);
 }
 

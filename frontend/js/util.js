@@ -69,3 +69,26 @@ function rellenaRazas(razaPerro){
 		console.log('error al intentar traer las razas :(');
 	});
 }
+
+/**
+TODO: refactorizar para no tener dos funciones
+ * para rellenar el combobox con las razas
+ */
+
+
+function rellenaRazasN(razaPerro){
+	$.get(prot + ip + colon + port + '/razas?limit=407',function(razas){
+		razas.forEach(function(raza){
+			$('select#select-razasN').selectmenu();
+			var option = '<option value="' + raza.nombre + '">' + raza.nombre  + '</option>';
+			if (razaPerro && razaPerro == raza.nombre) {
+				option = '<option value="' + raza.nombre + '" selected="selected">' + raza.nombre  + '</option>';
+			}
+			$('select#select-razasN').append(option);
+		});
+		$('select#select-razasN').selectmenu('refresh');
+		$("select#select-razasN").selectmenu('enable');
+	}).fail(function(){
+		console.log('error al intentar traer las razas :(');
+	});
+}
