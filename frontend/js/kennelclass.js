@@ -95,41 +95,41 @@ function save() {
     var rest;
     if (localStorage.id) {
         rest = prot + ip + colon + port +  update + localStorage.id + '?';
-        rest = rest + propietario + $('#textinput-prop').val() + and +
-            telefono + $('#textinput-tel').val() + and +
-            movil + $('#textinput-mov').val() + and +
-            email + $('#textinput-mail').val() + and +
-            nombre + $('#textinput-nom').val() + and +
-            raza + $('#select-razas').val() + and +
-            color + $('#textinput-color').val() + and +
-            edad + $('#textinput-edad').val() + and +
-            caracter + $('#textinput-car').val() + and +
-            problemasMedicos + $('#textarea-prob').val();
+        // rest = rest + propietario + $('#textinput-prop').val() + and +
+        //     telefono + $('#textinput-tel').val() + and +
+        //     movil + $('#textinput-mov').val() + and +
+        //     email + $('#textinput-mail').val() + and +
+        //     nombre + $('#textinput-nom').val() + and +
+        //     raza + $('#select-razas').val() + and +
+        //     color + $('#textinput-color').val() + and +
+        //     edad + $('#textinput-edad').val() + and +
+        //     caracter + $('#textinput-car').val() + and +
+        //     problemasMedicos + $('#textarea-prob').val();
     } else {
       // TODO: refactorizar para no tener repetido el código
         rest = prot + ip + colon + port + create;
-        rest = rest + propietario + $('#textinput-propN').val() + and +
-            telefono + $('#textinput-telN').val() + and +
-            movil + $('#textinput-movN').val() + and +
-            email + $('#textinput-mailN').val() + and +
-            nombre + $('#textinput-nomN').val() + and +
-            raza + $('#select-razasN').val() + and +
-            color + $('#textinput-colorN').val() + and +
-            edad + $('#textinput-edadN').val() + and +
-            caracter + $('#textinput-carN').val() + and +
-            problemasMedicos + $('#textarea-probN').val();
+        // rest = rest + propietario + $('#textinput-propN').val() + and +
+        //     telefono + $('#textinput-telN').val() + and +
+        //     movil + $('#textinput-movN').val() + and +
+        //     email + $('#textinput-mailN').val() + and +
+        //     nombre + $('#textinput-nomN').val() + and +
+        //     raza + $('#select-razasN').val() + and +
+        //     color + $('#textinput-colorN').val() + and +
+        //     edad + $('#textinput-edadN').val() + and +
+        //     caracter + $('#textinput-carN').val() + and +
+        //     problemasMedicos + $('#textarea-probN').val();
     }
 
-    // rest = rest + propietario + $('#textinput-prop').val() + and +
-    //     telefono + $('#textinput-tel').val() + and +
-    //     movil + $('#textinput-mov').val() + and +
-    //     email + $('#textinput-mail').val() + and +
-    //     nombre + $('#textinput-nom').val() + and +
-    //     raza + $('#select-razas').val() + and +
-    //     color + $('#textinput-color').val() + and +
-    //     edad + $('#textinput-edad').val() + and +
-    //     caracter + $('#textinput-car').val() + and +
-    //     problemasMedicos + $('#textarea-prob').val();
+    rest = rest + propietario + $('#textinput-prop').val() + and +
+        telefono + $('#textinput-tel').val() + and +
+        movil + $('#textinput-mov').val() + and +
+        email + $('#textinput-mail').val() + and +
+        nombre + $('#textinput-nom').val() + and +
+        raza + $('#select-razas').val() + and +
+        color + $('#textinput-color').val() + and +
+        edad + $('#textinput-edad').val() + and +
+        caracter + $('#textinput-car').val() + and +
+        problemasMedicos + $('#textarea-prob').val();
     if (uriImage) {
         var ur = uriImage.replace('data:image/jpeg;base64,', '');
         var uri1 = encodeURIComponent(ur);
@@ -419,8 +419,10 @@ function borraID() {
 function nuevaFicha() {
     localStorage.clear();
     limpiarLista();
+    $('#ficha_borra_bttn').css('display', 'none');
+    $('#ficha_dar_cita_bttn').css('display', 'none');
     setTimeout(function () {
-        rellenaRazasN('mestizo');
+        rellenaRazas('mestizo');
     }, 200);
 }
 
@@ -432,6 +434,8 @@ function nuevaFicha() {
 
 function cargaFichas() {
     if (localStorage.id) {
+      $('#ficha_borra_bttn').css('display', 'block');
+      $('#ficha_dar_cita_bttn').css('display', 'block');
         var url = document.location.href;
         $.get(prot + ip + colon + port + '/ficha?id=' + localStorage.id, function (datos) {
           console.log(datos);
@@ -445,8 +449,12 @@ function cargaFichas() {
                 $('#textinput-edad').val(datos.edad);
                 $('#textinput-car').val(datos.caracter);
                 $('#textarea-prob').val(datos.problemasMedicos);
+                $('img').remove();
                 if (datos.imagen) {
                     $('#retrato').append('<img src="data:image/jpeg;base64,' + datos.imagen + '"/>');
+                }
+                if ($('#tabla-servicios tbody')) {
+                    $('#tabla-servicios tbody').remove();
                 }
                 if (datos.serviciosPrestados.length != 0) {
                     var ordenados = datos.serviciosPrestados.sort(dynamicSortMultiple("-fechaServicio", "horaServicio"));
