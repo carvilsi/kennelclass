@@ -91,6 +91,16 @@ gulp.task('scripts', function() {
     .pipe(livereload());
 });
 
+// JS concat, strip and minify
+gulp.task('scriptsDev', function() {
+  gulp.src(sourceDir + jscriptsDir)
+    .pipe(concat(jsFile))
+    // .pipe(stripDebug())
+    .pipe(uglify())
+    .pipe(gulp.dest(destinyDir + jscriptsDirDest))
+    .pipe(livereload());
+});
+
 // CSS concat, auto-prefix and minify
 gulp.task('styles', function() {
   gulp.src([sourceDir + stylesDir])
@@ -113,7 +123,12 @@ gulp.task('bower',function(){
 
 
 // default gulp task
-gulp.task('default', ['lint','imagen', 'htmlmin', 'scripts', 'styles', 'bower','watch'], function() {
+gulp.task('default', ['lint','imagen', 'htmlmin', 'scriptsDev', 'styles', 'bower','watch'], function() {
+  livereload.listen({ basePath: 'dist' });
+});
+
+// productio gulp task
+gulp.task('prod', ['lint','imagen', 'htmlmin', 'scripts', 'styles', 'bower','watch'], function() {
   livereload.listen({ basePath: 'dist' });
 });
 
@@ -135,7 +150,7 @@ watcher(sourceDir + stylesDir, function(e,d) {
 gulp.task('watch', function(){
   livereload.listen({ basePath: 'dist'});
   gulp.watch(sourceDir + 'bower_components/**/*', ['bower']);
-  gulp.watch(sourceDir + jscriptsDir, ['lint','scripts']);
+  gulp.watch(sourceDir + jscriptsDir, ['lint','scriptsDev']);
   gulp.watch(sourceDir + '*.html', ['htmlmin']);
   gulp.watch(sourceDir + stylesDir, ['styles']);
   gulp.watch(sourceDir + imgDir, ['imagen']);

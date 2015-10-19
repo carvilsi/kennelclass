@@ -11,7 +11,6 @@ module.exports = {
   	serv: {model: 'Ficha'},
 	conceptoServicio: { type: 'string'},
 	horaServicio: { type: 'string'},
-//	fechaServicio: { type: 'string'},
 	fechaServicio: { type: 'date'},
 	updatedAt: { type: 'string'},
 	createdAt: { type: 'string'},
@@ -21,4 +20,3 @@ module.exports = {
             }
   }
 };
-

@@ -26,7 +26,56 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': true,
+
+  RazasController: {
+      update: ['hasJsonWebToken'],
+      remove: ['hasJsonWebToken'],
+      add: ['hasJsonWebToken'],
+      populate: ['hasJsonWebToken'],
+      create:  ['hasJsonWebToken']
+  },
+
+  AuthController: {
+      update: ['hasJsonWebToken'],
+      remove: ['hasJsonWebToken'],
+      add: ['hasJsonWebToken'],
+      populate: ['hasJsonWebToken'],
+      create:  ['hasJsonWebToken']
+    },
+
+  ServicioController: {
+    update: ['hasJsonWebToken'],
+    remove: ['hasJsonWebToken'],
+    add: ['hasJsonWebToken'],
+    populate: ['hasJsonWebToken'],
+    create:  ['hasJsonWebToken'],
+    find: ['hasJsonWebToken'],
+    findOne: ['hasJsonWebToken'],
+    buscaAhora: ['hasJsonWebToken'],
+    eliminaFicha: ['hasJsonWebToken'],
+    buscaEntre: ['hasJsonWebToken']
+  },
+
+  UserController: {
+    update: ['hasJsonWebToken'],
+    remove: ['hasJsonWebToken'],
+    add: ['hasJsonWebToken'],
+    populate: ['hasJsonWebToken'],
+    create:  ['hasJsonWebToken'],
+    find: ['hasJsonWebToken'],
+    findOne: ['hasJsonWebToken']
+  },
+
+  FichaController: {
+    update: ['hasJsonWebToken'],
+    remove: ['hasJsonWebToken'],
+    add: ['hasJsonWebToken'],
+    populate: ['hasJsonWebToken'],
+    create:  ['hasJsonWebToken'],
+    find: ['hasJsonWebToken'],
+    findOne: ['hasJsonWebToken']
+  }
 
   /***************************************************************************
   *                                                                          *

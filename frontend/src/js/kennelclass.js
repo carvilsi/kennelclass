@@ -68,22 +68,46 @@ var filtroServicioID = 2;
 
 // ip y puerto donde se encuentra el backend
 
-var ip='localhost';
-
-var port=1337;
+// var ip='localhost';
+//
+// var port=1337;
+var ip,port;
 
 var prot = 'http://';
 
 var colon = ':';
 
-(function () {
+// (function () {
+//
+//     // Pillamos las variables del archivo de configuración
+//
+//     ip = appConfig.ip;
+//     port = appConfig.port;
+//
+//     console.log('=^^=|_');
+//     console.log(ip);
+//     console.log(port);
+//
+//     buscaServicios();
+//     localStorage.clear();
+//
+// })();
 
 
+$(document).ready(function () {
 
-    buscaServicios();
-    localStorage.clear();
 
-})();
+  // Pillamos las variables del archivo de configuración
+  ip = appConfig.ip;
+  port = appConfig.port;
+
+  console.log('=^^=|_');
+  console.log(ip);
+  console.log(port);
+
+  // buscaServicios();
+  localStorage.clear();
+});
 
 
 
@@ -569,28 +593,28 @@ $('#formulario').submit(function (event) {
 intentando el inicio de sesionIniciada
 */
 
-
-// $('#botonLogin').click(function () {
-//     console.log('Llego o que cojones');
-//     $.ajax({
-//         type: "POST",
-//         url: 'http://' + ip + ':' + port + '/auth/login',
-//         data: {
-//             email: $('#nombredeusuario').val(),
-//             password: $('#clave').val()
-//         },
-//         xhrFields: {
-//             withCredentials: true
-//         },
-//         success: function (response) {
-//           console.log('JODEEER');
-//           window.location('/inicio');
-//             console.log('Algo: ' + response);
-//             localStorage.jwt = response.token;
-//             limpiaLogin();
-//             sesionIniciada();
-//             dameUsuarios();
-//         },
-//         dataType: 'json'
-//     });
-// });
+$(document).on('click','#botonLogin',function(event){
+    console.log('Llego o que cojones');
+    $.ajax({
+        type: "POST",
+        url: 'http://' + ip + ':' + port + '/auth/login',
+        data: {
+            email: $('#emailUsuario').val(),
+            password: $('#claveUsuario').val()
+        },
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function (response) {
+          // console.log('JODEEER');
+          $.mobile.changePage("#control");
+          // window.location('#control');
+            console.log('Algo: ' + response);
+            localStorage.jwt = response.token;
+            // limpiaLogin();
+            // sesionIniciada();
+            // dameUsuarios();
+        },
+        dataType: 'json'
+    });
+});
