@@ -45,6 +45,6 @@ Se le ha añadido [gulp](http://gulpjs.com/) para ponerlo en marcha
 Se han generado dos tareas principales:
 
 * Desarrollo: `$ gulp`
-* Producción: '$ gulp prod'
+* Producción: `$ gulp prod`
 
 --
