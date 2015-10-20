@@ -16,6 +16,7 @@ Demo de [kennelclass](http://5.196.11.71:1337/)
 
 Basada en [Sails](http://sailsjs.org) y [mongodb](http://www.mongodb.org/)
 
+## Backend
 
 Para **instalar** necesitarás:
 
@@ -34,5 +35,16 @@ Para ejecutar:
 
 `$ sails lift`
 
-El frontend se encuentra en la carpeta "frontend" :P
+## Frontend
+
+El frontend se encuentra en la carpeta "frontend".
+Se le ha añadido [gulp](http://gulpjs.com/) para ponerlo en marcha
+
+`$ npm install`
+
+Se han generado dos tareas principales:
+
+* Desarrollo: `$ gulp`
+* Producción: '$ gulp prod'
+
 --
