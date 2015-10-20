@@ -47,8 +47,8 @@ module.exports.policies = {
   ServicioController: {
     update: ['hasJsonWebToken'],
     remove: ['hasJsonWebToken'],
-    add: ['hasJsonWebToken'],
-    populate: ['hasJsonWebToken'],
+    // add: ['hasJsonWebToken'],
+    // populate: ['hasJsonWebToken'],
     create:  ['hasJsonWebToken'],
     find: ['hasJsonWebToken'],
     findOne: ['hasJsonWebToken'],
@@ -70,8 +70,8 @@ module.exports.policies = {
   FichaController: {
     update: ['hasJsonWebToken'],
     remove: ['hasJsonWebToken'],
-    add: ['hasJsonWebToken'],
-    populate: ['hasJsonWebToken'],
+    // add: ['hasJsonWebToken'],
+    // populate: ['hasJsonWebToken'],
     create:  ['hasJsonWebToken'],
     find: ['hasJsonWebToken'],
     findOne: ['hasJsonWebToken']

@@ -56,6 +56,7 @@ var update = '/ficha/update/';
 var deleteFicha = '/ficha/destroy/';
 
 var and = '&';
+var acctoken = '&access_token=';
 
 
 var uriImage = '';
@@ -104,9 +105,14 @@ $(document).ready(function () {
   console.log('=^^=|_');
   console.log(ip);
   console.log(port);
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
+    buscaServicios();
+    $.mobile.changePage("#control");
+  }
 
-  // buscaServicios();
-  localStorage.clear();
+  // localStorage.clear();
 });
 
 
@@ -116,6 +122,9 @@ $(document).ready(function () {
  */
 
 function save() {
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
     var rest;
     if (localStorage.id) {
         rest = prot + ip + colon + port +  update + localStorage.id + '?';
@@ -138,6 +147,7 @@ function save() {
         var uri1 = encodeURIComponent(ur);
         rest += and + imagen + uri1;
     }
+    rest += acctoken + localStorage.jwt;
     $.post(rest, function (resp) {
         uriImage = '';
         mensaje('Ficha guardada OK :)');
@@ -148,6 +158,7 @@ function save() {
     setTimeout(function () {
         recargaInicio();
     }, 100);
+  }
 }
 
 /**
@@ -155,6 +166,9 @@ function save() {
  */
 
 function borraFicha() {
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
     var rest;
     if (localStorage.id) {
         $.get(prot + ip + colon + port + '/servicio/elimina?id=' + localStorage.id, function (res) {
@@ -171,6 +185,7 @@ function borraFicha() {
         });
 
     }
+  }
 }
 
 /**
@@ -181,6 +196,9 @@ function borraFicha() {
 
 
 function guardaServicio(v) {
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
     var rest;
     var precio = $('#textinput-precio' + v).val() ? $('#textinput-precio' + v).val() : 0;
     if (localStorage.idServicio && !localStorage.id) {
@@ -190,6 +208,7 @@ function guardaServicio(v) {
                 horaServicio + $('#input-hora' + v).val() + and +
                 conceptoServicio + $('#textarea-servicio' + v).val() + and +
                 precioServicio + precio;
+            rest += acctoken + localStorage.jwt;
             $.post(rest, function (res) {
                 setTimeout(function () {
                     mensaje('Servicio actualizado OK :)');
@@ -205,7 +224,8 @@ function guardaServicio(v) {
         } catch (e) {
             console.log('error com');
         } finally {
-            localStorage.clear();
+            // localStorage.clear();
+            clearID();
         }
     } else {
         if (v && localStorage.idServicio) {
@@ -221,15 +241,17 @@ function guardaServicio(v) {
                 conceptoServicio + $('#textarea-servicio' + v).val() + and +
                 precioServicio + precio;
         }
-
+        rest += acctoken + localStorage.jwt;
         $.post(rest, function (response) {
             $.post('http://' + ip + ':' + port + '/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id, function (res) {
+            // $.post('http://' + ip + ':' + port + '/ficha/' + localStorage.id + '/serviciosPrestados/' + response.id + acctoken + localStorage.jwt, function (res) {
                 setTimeout(function () {
                     mensaje('Servicio guardado OK :)');
                 }, 100);
                 if (!v) {
                     buscaServicios();
-                    localStorage.clear();
+                    // localStorage.clear();
+                    clearID();
                 } else {
                     refrescaTablaServicios();
                     localStorage.removeItem('idServicio');
@@ -241,6 +263,7 @@ function guardaServicio(v) {
             mensaje('Servicio no guardado NOK :/');
         });
     }
+  }
 }
 
 
@@ -249,8 +272,11 @@ function guardaServicio(v) {
  */
 
 function buscaFichas() {
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
     var busca = $('#busqueda-fichas').val();
-    $.get('http://' + ip + ':' + port + '/ficha?where={"nombre":{"contains":"' + busca + '"}}&limit=50', function (data) {
+    $.get('http://' + ip + ':' + port + '/ficha?where={"nombre":{"contains":"' + busca + '"}}&limit=50' + acctoken + localStorage.jwt, function (data) {
         $('#ul-fichas').listview().empty();
         data.forEach(function (ficha) {
             var imagen = ficha.imagen ? '<img src="data:image/jpeg;base64,' + ficha.imagen + '"/>' : '';
@@ -265,6 +291,7 @@ function buscaFichas() {
     }).fail(function () {
         console.log('error com.');
     });
+  }
 }
 
 /**
@@ -273,10 +300,13 @@ function buscaFichas() {
  */
 
 function buscaServicios() {
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
     var hoy = new Date();
     hoy = dia == 0 ? hoy : addDays(hoy, dia);
     var avui = hoy.getFullYear() + '-' + ('0' + (hoy.getMonth() + 1)).slice(-2) + '-' + ('0' + hoy.getDate()).slice(-2);
-    $.get(prot + ip + colon + port + '/servicio/buscaDia?fecha=' + avui + '&filtro=' + filtroServicioID, function (data) {
+    $.get(prot + ip + colon + port + '/servicio/buscaDia?fecha=' + avui + '&filtro=' + filtroServicioID + acctoken + localStorage.jwt, function (data) {
         $('#ul-servicios').empty();
         data.forEach(function (servicio) {
             var color = servicio.precioServicio == 0 ? 'style="color:red"' : '';
@@ -290,6 +320,7 @@ function buscaServicios() {
     }).fail(function () {
         console.log('error com.');
     });
+  }
 }
 
 
@@ -369,13 +400,23 @@ $(document).on('click', '#unDiaMas', function(){
  */
 
 function borraID() {
-    localStorage.clear();
+    // localStorage.clear();
+    clearID();
     limpiarLista();
     resetCam();
 }
 
+/**
+ * Solo elimina el id
+ */
+
+function clearID(){
+  localStorage.removeItem('id');
+}
+
 function nuevaFicha() {
-    localStorage.clear();
+    // localStorage.clear();
+    clearID();
     limpiarLista();
     $('#ficha_borra_bttn').css('display', 'none');
     $('#ficha_dar_cita_bttn').css('display', 'none');
@@ -391,11 +432,14 @@ function nuevaFicha() {
 
 
 function cargaFichas() {
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
     if (localStorage.id) {
       $('#ficha_borra_bttn').css('display', 'block');
       $('#ficha_dar_cita_bttn').css('display', 'block');
         var url = document.location.href;
-        $.get(prot + ip + colon + port + '/ficha?id=' + localStorage.id, function (datos) {
+        $.get(prot + ip + colon + port + '/ficha?id=' + localStorage.id + acctoken + localStorage.jwt, function (datos) {
           console.log(datos);
             setTimeout(function () {
                 $('#textinput-prop').val(datos.propietario);
@@ -436,6 +480,7 @@ function cargaFichas() {
     } else {
         console.log('Error en localStorage :/');
     }
+  }
 }
 
 /**
@@ -445,7 +490,10 @@ function cargaFichas() {
  */
 
 function refrescaTablaServicios() {
-    $.get(prot + ip + colon + port + '/ficha?id=' + localStorage.id, function (datos) {
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
+    $.get(prot + ip + colon + port + '/ficha?id=' + localStorage.id + acctoken + localStorage.jwt, function (datos) {
         if (datos.serviciosPrestados.length != 0) {
             if ($('#tabla-servicios tbody')) {
                 $('#tabla-servicios tbody').remove();
@@ -467,6 +515,7 @@ function refrescaTablaServicios() {
     }).fail(function () {
         console.log('err comm. :()');
     });
+  }
 }
 
 function tocameFila(esto) {
@@ -537,8 +586,11 @@ function limpiarLista() {
 }
 
 function cargaServicio(tipo) {
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
     if (localStorage.idServicio) {
-        $.get(prot + ip + colon + port + '/servicio?id=' + localStorage.idServicio, function (servicio) {
+        $.get(prot + ip + colon + port + '/servicio?id=' + localStorage.idServicio + acctoken + localStorage.jwt, function (servicio) {
             var fecha = new Date(servicio.fechaServicio);
             $('#fecha-servicio' + tipo).val(fecha.getFullYear() + '-' + ("0" + (fecha.getMonth() + 1)).slice(-2) + '-' + ("0" + fecha.getDate()).slice(-2));
             $('#input-hora' + tipo).val(servicio.horaServicio);
@@ -549,6 +601,7 @@ function cargaServicio(tipo) {
             console.log('error comm');
         });
     }
+  }
 }
 
 
@@ -559,8 +612,11 @@ function recargaInicio() {
 }
 
 function borraServicio(tipo) {
+  if (localStorage.getItem('jwt') === null || localStorage.getItem('jwt') === '') {
+    $.mobile.changePage("#home");
+  } else {
     try {
-        $.get(prot + ip + colon + port + '/servicio/destroy/' + localStorage.idServicio, function (respuesta) {
+        $.get(prot + ip + colon + port + '/servicio/destroy/' + localStorage.idServicio + acctoken + localStorage.jwt, function (respuesta) {
             if (!tipo) {
                 borraID();
                 buscaServicios();
@@ -576,6 +632,7 @@ function borraServicio(tipo) {
     } finally {
         $('#botonBorrarServicio' + tipo).css('display', 'none');
     }
+  }
 }
 
 
@@ -594,7 +651,6 @@ intentando el inicio de sesionIniciada
 */
 
 $(document).on('click','#botonLogin',function(event){
-    console.log('Llego o que cojones');
     $.ajax({
         type: "POST",
         url: 'http://' + ip + ':' + port + '/auth/login',
@@ -606,14 +662,8 @@ $(document).on('click','#botonLogin',function(event){
             withCredentials: true
         },
         success: function (response) {
-          // console.log('JODEEER');
           $.mobile.changePage("#control");
-          // window.location('#control');
-            console.log('Algo: ' + response);
-            localStorage.jwt = response.token;
-            // limpiaLogin();
-            // sesionIniciada();
-            // dameUsuarios();
+          localStorage.jwt = response.token;
         },
         dataType: 'json'
     });

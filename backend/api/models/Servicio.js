@@ -9,14 +9,14 @@ module.exports = {
 
   attributes: {
   	serv: {model: 'Ficha'},
-	conceptoServicio: { type: 'string'},
-	horaServicio: { type: 'string'},
-	fechaServicio: { type: 'date'},
-	updatedAt: { type: 'string'},
-	createdAt: { type: 'string'},
-	precioServicio: {
-            type: 'integer',
-            required: false
-            }
+	  conceptoServicio: { type: 'string'},
+	  horaServicio: { type: 'string'},
+	  fechaServicio: { type: 'date'},
+	  updatedAt: { type: 'string'},
+	  createdAt: { type: 'string'},
+	  precioServicio: {
+      type: 'integer',
+      required: false
+    }
   }
 };

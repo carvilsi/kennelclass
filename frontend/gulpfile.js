@@ -96,7 +96,7 @@ gulp.task('scriptsDev', function() {
   gulp.src(sourceDir + jscriptsDir)
     .pipe(concat(jsFile))
     // .pipe(stripDebug())
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest(destinyDir + jscriptsDirDest))
     .pipe(livereload());
 });
