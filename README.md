@@ -39,7 +39,7 @@ Para ejecutar:
 
 El frontend se encuentra en la carpeta "frontend".
 
-Para **instalar** las dependecias con bower, carpeta src.
+Para **instalar** las dependecias con bower, carpeta "src".
 
 ```
 $ cd frontend/src/
@@ -47,7 +47,7 @@ $ bower install
 ```
 
 
-Se le ha añadido [gulp](http://gulpjs.com/) para ponerlo en marcha
+Se le ha añadido [gulp](http://gulpjs.com/) para ponerlo en marcha, bajo el directorio "frontend".
 
 `$ npm install`
 
