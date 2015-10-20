@@ -1,0 +1,21 @@
+{
+  "name": "kennelClass",
+  "homepage": "https://github.com/carvilsi/kennelclass",
+  "authors": [
+    "carvilsi <carvilsi@gmail.com>"
+  ],
+  "description": "kennelClass dependencies",
+  "main": "main",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-mobile-bower": "~1.4.5"
+  }
+}
