@@ -15,6 +15,7 @@
 
 	<script src="bower_components/jquery/jquery.min.js"></script>
 	<script src="bower_components/jquery-mobile-bower/js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="config.js"></script>
 	<script src="js/main.js"></script>
 	<!-- <script src="js/kennelclass.js"></script>
 	<script src="js/webcam.js"></script>
@@ -34,38 +35,26 @@
 
 		<br>
 <br>
-<div id="contenido">
-					 <h3>Iniciar Sesión</h3>
-
-					 <!-- <label for="emailUsuario">Email</label>
-					 <input type="text" name="emailUsuario" id="emailUsuario" value="">
-					 <label for="claveUsuario">Contraseña</label>
-					 <input type="password" name="claveUsuario" id="claveUsuario" value=""> -->
-					 <fieldset class="ui-grid-a">
-	             <div class="ui-block-a">
-	                 <div style="width:90%" class="ui-field-contain">
+<div id="contenido" class="login">
+					 <h3 class="inicia-sesion-titulo">Iniciar Sesión</h3>
+					 <fieldset class="ui-grid-a field-login">
+	             <div class="ui-block-a campos-login">
+	                 <div class="ui-field-contain">
 	                     <label for="emailUsuario">Email:</label>
-	                     <input data-clear-btn="true" name="emailUsuario" id="emailUsuario" placeholder="demo@kennel.class" value="" type="email">
+	                     <input data-clear-btn="true" name="emailUsuario" id="emailUsuario" placeholder="demo@mail.com" value="" type="email">
+	                 </div>
+									 <div class="ui-field-contain">
+	                     <label for="claveUsuario">Contraseña:</label>
+	                     <input data-clear-btn="true" name="claveUsuario" id="claveUsuario" placeholder="demo" value="" type="password">
 	                 </div>
 	             </div>
-	             <div class="ui-block-b">
-	                 <div style="width:90%" class="ui-field-contain">
-	                     <label for="claveUsuario">Contraseña</label>
-	                     <input data-clear-btn="true" name="claveUsuario" id="claveUsuario" placeholder="kennelclass" value="" type="password">
-	                 </div>
-	             </div>
-							 <!-- <a id="botonLogin" class="ui-btn ui-btn-icon-left ui-icon-plus" title="Iniciar Sesión">Iniciar</a> -->
-
 	         </fieldset>
-					 <button id="botonLogin" class="ui-btn ui-corner-all">Button</button>
-
-
+					 <button id="botonLogin" class="ui-btn ui-corner-all">Acceder</button>
 </div>
 
 
         <div data-role="footer" data-position="fixed" data-tap-toggle="false">
             <h6>Kennel Class</h6>
-
         </div>
 
 </div>

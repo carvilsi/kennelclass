@@ -27,7 +27,20 @@ label.ui-btn.ui-corner-all.ui-btn-inherit.ui-radio-off.ui-first-child {
 	margin-left: 4px;
 }
 
-#login {
-    max-width: 220px;
+.login {
+    max-width: 420px;
     margin: 0 auto;
+
+}
+
+.field-login > .campos-login{
+	width: 100% !important;
+}
+
+.inicia-sesion-titulo {
+	text-align: center;
+}
+
+.campos-login {
+	float: none !important;
 }

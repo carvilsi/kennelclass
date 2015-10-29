@@ -120,15 +120,21 @@ gulp.task('bower',function(){
       .pipe(livereload());;
 });
 
+//archivo de configuración
+gulp.task('config', function() {
+  gulp.src(sourceDir + 'config.js')
+    .pipe(gulp.dest(destinyDir))
+    .pipe(livereload());
+});
 
 
 // default gulp task
-gulp.task('default', ['lint','imagen', 'htmlmin', 'scriptsDev', 'styles', 'bower','watch'], function() {
+gulp.task('default', ['lint','imagen', 'htmlmin', 'config', 'scriptsDev', 'styles', 'bower','watch-dev'], function() {
   livereload.listen({ basePath: 'dist' });
 });
 
 // productio gulp task
-gulp.task('prod', ['lint','imagen', 'htmlmin', 'scripts', 'styles', 'bower','watch'], function() {
+gulp.task('prod', ['lint','imagen', 'htmlmin', 'config', 'scripts', 'styles', 'bower','watch'], function() {
   livereload.listen({ basePath: 'dist' });
 });
 
@@ -150,8 +156,19 @@ watcher(sourceDir + stylesDir, function(e,d) {
 gulp.task('watch', function(){
   livereload.listen({ basePath: 'dist'});
   gulp.watch(sourceDir + 'bower_components/**/*', ['bower']);
+  gulp.watch(sourceDir + jscriptsDir, ['lint','scripts']);
+  gulp.watch(sourceDir + '*.html', ['htmlmin']);
+  gulp.watch(sourceDir + stylesDir, ['styles']);
+  gulp.watch(sourceDir + imgDir, ['imagen']);
+  gulp.watch(sourceDir + 'config.js', ['config']);
+});
+
+gulp.task('watch-dev', function(){
+  livereload.listen({ basePath: 'dist'});
+  gulp.watch(sourceDir + 'bower_components/**/*', ['bower']);
   gulp.watch(sourceDir + jscriptsDir, ['lint','scriptsDev']);
   gulp.watch(sourceDir + '*.html', ['htmlmin']);
   gulp.watch(sourceDir + stylesDir, ['styles']);
   gulp.watch(sourceDir + imgDir, ['imagen']);
+  gulp.watch(sourceDir + 'config.js', ['config']);
 });
