@@ -34,8 +34,8 @@
     </div>
 
 		<br>
-<br>
-<div id="contenido" class="login">
+		<br>
+	<div id="contenido" class="login">
 					 <h3 class="inicia-sesion-titulo">Iniciar Sesión</h3>
 					 <fieldset class="ui-grid-a field-login">
 	             <div class="ui-block-a campos-login">
@@ -50,13 +50,14 @@
 	             </div>
 	         </fieldset>
 					 <button id="botonLogin" class="ui-btn ui-corner-all">Acceder</button>
-</div>
+				 </div>
 
 
         <div data-role="footer" data-position="fixed" data-tap-toggle="false">
             <h6>Kennel Class</h6>
         </div>
-
+				<div data-role="popup" id="guardar-popup" class="ui-content" data-theme="a">
+				</div>
 </div>
 
 <!-- FIN    LOGIN-HOME -->
@@ -72,7 +73,9 @@
         <img src="img/logo.png" class="ui-btn-left" style="height: 2.8em" />
         <h6>Inicio</h6>
     </div>
-
+		<!-- <div data-role="popup" id="guardar-popup" class="ui-content" data-theme="a">
+		</div> -->
+<!-- </div> -->
 		<br>
 <br>
 <div id="contenido">
@@ -158,8 +161,8 @@
 
         <div data-role="footer" data-position="fixed" data-tap-toggle="false">
             <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-left">
-                <a href="#home" onclick="limpiarLista();" class="ui-btn ui-btn-icon-left ui-icon-home">Home</a>
-                <!-- <a href="/auth/logout" onclick="limpiarLista();" class="ui-btn ui-btn-icon-left ui-icon-home">Cerrar Sesión</a> -->
+                <a href="#home" onclick="cerrarSesion();" class="ui-btn ui-btn-icon-left ui-icon-home">Cerrar Sesión</a>
+                <!-- <a href="#home" onclick="limpiarLista();" class="ui-btn ui-btn-icon-left ui-icon-home">Cerrar Sesión</a> -->
             </div>
             <div data-role="controlgroup" data-type="horizontal" class="ui-mini ui-btn-right">
                 <a href="#ficha" onClick="nuevaFicha('');" class="ui-btn ui-btn-icon-left ui-icon-plus" title="Nueva Ficha">Ficha</a>

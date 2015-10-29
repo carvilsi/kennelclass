@@ -653,7 +653,8 @@ intentando el inicio de sesionIniciada
 $(document).on('click','#botonLogin',function(event){
     $.ajax({
         type: "POST",
-        url: 'http://' + ip + ':' + port + '/auth/login',
+        url: prot + ip + ':' + port + '/auth/login',
+        // url: 'http://' + ip + ':' + port + '/auth/login',
         data: {
             email: $('#emailUsuario').val(),
             password: $('#claveUsuario').val()
@@ -664,7 +665,40 @@ $(document).on('click','#botonLogin',function(event){
         success: function (response) {
           $.mobile.changePage("#control");
           localStorage.jwt = response.token;
+          $('#claveUsuario').val('');
+          $('#emailUsuario').val();
         },
-        dataType: 'json'
+        dataType: 'json',
+        error: function(jqXHR, textStatus, errorThrown) {
+          // console.log(textStatus);
+          // console.log(errorThrown);
+          // console.log(jqXHR);
+          mensaje('Datos incorrectos :(');
+        }
     });
 });
+
+/**
+Llamada al cierre de sesión
+eliminamos el jwt
+eliminamos los datos de usuario<
+*/
+
+function cerrarSesion() {
+  $.get(prot + ip + ':' + port + '/auth/logout', function (data) {
+  // $.get('http://' + ip + ':' + port + '/auth/logout', function (data) {
+    limipiaLocalstorage();
+    mensaje('Sesión cerrada :)');
+    // sesionCerrada();
+  }).fail(function () {
+    console.error('algo fue mal :S');
+  });
+}
+
+/**
+ * Para limpiar el localStorage
+ */
+
+function limipiaLocalstorage() {
+  localStorage.jwt = '';
+}
