@@ -31,10 +31,10 @@ module.exports.routes = {
      * `assets` directory)                                                      *
      *                                                                          *
      ***************************************************************************/
-
-    'get /': {
-        view: 'wapp'
-    },
+    'get /':'http://5.196.11.71/kennelClass', // desharcodear esto!!!!
+    // 'get /': {
+    //     view: 'wapp'
+    // },
     'get /fichas': {
         view: 'fichas/',
     },
